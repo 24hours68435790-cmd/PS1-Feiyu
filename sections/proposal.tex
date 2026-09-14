@@ -1,50 +1,38 @@
-\section{Three connected research questions}
-Start from Intellectual Statement II. State the background, motivation, application, affected stakeholders, and strategic tension. Explain your proposal's relationship to a Nobel-recognized foundation and current research.
+\section{Background and Motivation}
+Algorithmic scoring makes reported firm metrics consequential for capital allocation. Once a metric becomes a target, firms can optimize the reported number rather than the underlying fundamentals (Strathern, 1997). This logic is well established in earnings management and signal-jamming: firms can inflate observable signals, while rational evaluators discount them, creating resource waste without restoring informative prices (Healy and Wahlen, 1999; Stein, 1989; Brown et al., 2019). In machine learning, performative prediction shows that a deployed model can change the distribution it is intended to predict (Perdomo et al., 2020), while strategic classification makes explicit that agents may respond to a learner's announced rule (Hardt et al., 2016).
 
-\textbf{Q1---Economics:} [Which incentive, welfare, allocation, or institutional question needs an answer?]\par
-\textbf{Q2---Computation:} [Which model, algorithm, or evaluation makes the answer checkable?]\par
-\textbf{Q3---Behavior:} [Which belief, preference, reasoning limit, or learning mechanism could alter the prediction?]
+The gap I study is narrower: \emph{what happens when the evaluator can remember the particular firm and adapt to its history?} Commitment to underuse manipulable information can improve allocation (Frankel and Kartik, 2022), but a valuation model that retrains or updates need not commit to a fixed rule. Memory could discipline repeated manipulation through opponent-specific responses, but it could also misclassify an honest firm after an unlucky outcome. The proposal therefore treats manipulation cost, equilibrium behaviour, and evaluator memory as a joint economic--computational problem.
 
-Explain why the answers depend on one another. Cite relevant economics, computer-science, and behavioral-science papers. Refer to Figure~\ref{fig:teaser} and explain how its mechanism connects your questions.
+\section{Application Scenario and Research Question}
+The application is startup fundraising and private-fund reporting. The actors are a startup CFO (or fund manager), an AI-assisted valuation evaluator, investors who allocate capital mechanically from the posted price, and, in a later extension, an external auditor. The firm privately knows its quality $\theta$ and chooses productive effort $a$ and window-dressing $m$ on a discrete grid before reporting signal $s$. The firm values a higher price but pays effort and manipulation costs. The evaluator sees the report and, under the memory treatment, the firm's past reports and realised outcomes; its model weights are only partly known to the firm.
 
-\section{Answer to Q1: incentives and intellectual lineage}
-State a provisional answer or falsifiable hypothesis. Define players, actions versus strategies, payoffs, timing, and information. Name the solution concept and cite its defining paper, such as Nash~\cite{nash1950} or Bayesian equilibrium~\cite{harsanyi1968}. State what the benchmark establishes and what it leaves unresolved. Distinguish hypothetical, observed, estimated, and inherited quantities.
+The central research question is:
+\begin{quote}
+\textbf{When firms know the metrics an AI valuation model uses, under what conditions does an opponent-specific, memory-based evaluator sustain informative equilibrium disclosure that a static evaluator cannot---that is, when does memory substitute for commitment?}
+\end{quote}
 
-\section{Answer to Q2: method and evaluation}
-Explain the computational part of Figure~\ref{fig:teaser}: inputs, algorithm, baseline, metric, and a meaningful mathematical or computational check. Specify your smallest feasible experiment and one modification to the baseline. State the actual outputs obtained; label every untested outcome as expected or planned. Your Colab notebook and interactive game must explain the same research question and identify any differences in model or scope.
+The social objective is allocative efficiency net of resources spent on manipulation. The course-scale study uses two periods and a small finite game; the research version should vary the grid, cost distribution, horizon, and noise process.
 
-\clearpage\balance
-\section{Answer to Q3: behavior and competing explanations}
-Identify a behavioral mechanism and a competing explanation. Describe evidence that would discriminate between them. Explain how this changes the economic model or computational design. State the limits of what the planned evidence can identify. Synthetic or simulated results do not establish human or real AI behavior. Include a feasible next test and what finding would change your mind.
+\section{Method and Hypotheses}
+I use a three-layer design. \textbf{Behavioural layer:} manipulation cost is heterogeneous and convex in distortion. Fischbacher and Föllmi-Heusi (2013) motivate heterogeneity in honesty and partial lying, but their experiment does not identify the organisational convex cost function used here; convexity is therefore a modelling assumption and sensitivity range, not an imported empirical estimate. \textbf{Economic layer:} a two-period signalling/manipulation game is solved for equilibrium inflation and evaluator discounting, using a perfect Bayesian equilibrium where feasible. \textbf{Computational layer:} the same finite extensive-form game is represented in OpenSpiel and compared under static and memory-based evaluators, with CFR used as a computational benchmark for the relevant game class. The deployed browser Space is a teaching artifact, not evidence of equilibrium.
 
+The hypotheses are explicitly \emph{untested}:
+\begin{enumerate}
+\item \textbf{H1:} Under a transparent static model, manipulation concentrates on metrics with high scoring weight and low manipulation cost.
+\item \textbf{H2:} Rational manipulation can increase resource waste without proportional information gain, producing an inefficient equilibrium.
+\item \textbf{H3:} Under specified repeated-game conditions, a memory-based evaluator can sustain more honest disclosure than a static evaluator.
+\end{enumerate}
 
-\section{Advanced development and future directions}
-Build on a named Nobel laureate's defining work and cite the award record. Identify an enduring human question---such as cooperation, fairness, trust or collective choice---and explain what the foundation establishes. Add a relevant Turing Award foundation where it clarifies the computational lineage.
+The core controlled comparison holds the game tree, seed, firm actions, and realised outcomes fixed while swapping only the evaluator. This isolates whether opponent-specific memory changes prices, mispricing, manipulation payoffs, and welfare.
 
-Explain what is distinctive about today's environment and technology, what current research leaves unresolved, and how your proposal advances that boundary. State the economic, computational and behavioral contributions and the new insight their integration makes possible.
+\section{Expected Results and Evaluation}
+The deployed prototype already demonstrates the mechanism but does not test the hypotheses. With seed 2026, $\theta=2$ and $k=0.5$, a boundary case with $a=0,m=2$ gives a static price of 3.00 in both rounds, while the memory evaluator moves from 3.00 to 2.00 and removes the one-unit overpricing in the second round. In an honest case with $a=1,m=0$ and $v=3.00$, the static evaluator gives 2.00 in both rounds because its fixed allowance is deducted from every report; the memory evaluator moves from 2.00 to 3.00 after observing an honest first-round outcome. Invalid custom inputs such as $m=7$ or $m=\text{``abc''}$ are rejected rather than silently repaired. These runs show a mechanism, not evidence for H3; the noise channel was not meaningfully tested in the demonstration.
 
-\begin{table}[h]\caption{From laureate foundations to a new interdisciplinary contribution.}
-\begin{tabularx}{\columnwidth}{@{}p{1.6cm}Y@{}}\toprule
-\textbf{Horizon}&\textbf{Milestone and evidence}\\\midrule
-Foundation&[Laureate, defining work, enduring question and retained insight.]\\
-PS1&[Current-era setting, working baseline and meaningful check.]\\
-Next study&[New interdisciplinary explanation or design; a discriminating test.]\\
-Longer term&[Broader validation, benefits and reusable knowledge or tools.]\\
-2056&[Integrated contribution and evidence connecting it to the ambition below.]\\\bottomrule
-\end{tabularx}\end{table}
+The research evaluation will report at least four outcome families: (i) manipulation frequency and magnitude, (ii) price error $|p-v|$, (iii) firm payoff and social welfare, and (iv) allocation differences by firm size or type. I will sweep heterogeneous manipulation costs, scoring weights, evaluator memory strength, horizon, and outcome noise. In particular, the noise sweep is essential because memory can mistake an unlucky honest firm for a manipulator. Grid sensitivity will also be reported rather than hidden.
 
-\noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056, I aspire to be recognized for [theory, method or design] addressing [enduring human question] in [the current era's distinctive environment]. Building on [laureates and cited foundations], I will integrate [economics], [computer science] and [behavioral science] to advance [specific boundary]. Progress will be demonstrated by [milestones and evidence], with intellectual merits in [knowledge] and practical impacts for [people and institutions].
+\section{Intellectual Merit, Practical Impact, and Responsible Boundary}
+The intellectual contribution is the synthesis of three perspectives. Behavioural economics contributes heterogeneous reporting incentives; economics contributes strategic disclosure, commitment, and equilibrium reasoning; computer science contributes strategic classification, performative prediction, and a reproducible computational representation. The specific claim is not that memory is universally superior, but that the conditions under which memory can discipline disclosure can be stated and tested.
 
-\subsection*{Open Science Statement}
-\textbf{GitHub:} \GitHubLink\\
-\textbf{Google Colab:} \ColabLink\par
-[Identify available code, data or synthetic inputs, notebook, dependencies, outputs, release/commit and actual reuse terms. Give the shortest reproducible run instruction.]
+Practically, the protocol could become a pre-deployment test for whether a scoring rule rewards genuine quality or strategically cheap reporting. A public-sector analogue is a traceable measurement record: Dioptra illustrates how inputs, metrics, and artifacts can be recorded reproducibly, while its lack of an attacker-cost layer identifies a missing incentive component rather than a certification capability. The proposed application also connects to SDG Target 9.3: if manipulation capacity is unevenly distributed, a gameable valuation system can route capital toward sophisticated manipulators and under-price smaller honest firms. The course-scale observable is the simulated allocation gap by firm size; the official indicator is 9.3.2.
 
-\subsection*{Statement of Contribution to the UN's SDGs}
-\textbf{Hugging Face:} \DemoLink\\
-Through an open-access [tool], this project aims to support \textbf{SDG 4---Quality Education}~\cite{sdg4} by helping [audience] learn [concept] through [interaction]. [State access needs, learning instructions and a feasible evaluation.] Distinguish the resource released from benefits that remain to be evaluated.
-
-\subsection*{Submission milestones}
-First draft: September 13, 2026, 11:00 P.M. Beijing time (UTC+8). Class review: September 14. Proposed: rebuttal September 16 and revised submission September 20, both at 11:00 P.M. Update Appendix~\ref{app:abstract} with each reflection and revision.
-
+A central risk is false positives: a model hardened against manipulation may penalise unusual but honest reporting, especially for small or young firms. The final evaluation therefore requires a disparate-impact breakdown rather than only aggregate accuracy. The main milestone is to encode the two-period game in OpenSpiel, benchmark static and memory evaluators on the identical tree, sweep the cost and noise assumptions, and publish the browser-only teaching Space with reproducible logs.
