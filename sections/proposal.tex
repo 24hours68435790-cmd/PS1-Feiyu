@@ -1,50 +1,40 @@
 \section{Three connected research questions}
 Algorithmic scoring makes reported firm metrics consequential for capital
-allocation, and once a metric is a target the firm can optimise the number
-rather than the fundamentals behind it~\cite{strathern1997}.
-%% ---------------------------------------------------------------------------
-%% OPTIONAL CUT #2 (~85 words). Second cut if the main text still overruns.
-%% Losing it costs literature depth in the background, not a rubric element.
-%% ---------------------------------------------------------------------------
-Economics has studied this against human markets for decades: earnings
-management~\cite{healy1999}, signal-jamming equilibria in which rational markets
-discount inflation and wasteful inflation survives anyway~\cite{stein1989}, and
-private-equity funds that appear to inflate interim returns around
-fundraising~\cite{brown2019}. Machine learning arrives at the same place from
-the other side: a deployed model changes the distribution it is meant to
-predict~\cite{perdomo2020}, and agents respond to a learner's announced
-rule~\cite{hardt2016}.
-%% ------------------------- end OPTIONAL CUT #2 -----------------------------
-The stakeholders are the startups and funds being scored,
-investors who allocate mechanically from the posted price, and an auditor who
-can observe the evaluator's behaviour but not its weights.
+allocation, and once a metric is a target the firm optimises the number rather
+than the fundamentals behind it~\cite{strathern1997}. Economics has studied this
+against human markets for decades---earnings management~\cite{healy1999},
+signal-jamming~\cite{stein1989}, funds inflating interim returns around
+fundraising~\cite{brown2019}---and machine learning arrives from the other side:
+a deployed model changes the distribution it predicts~\cite{perdomo2020} and
+agents respond to the announced rule~\cite{hardt2016}. The stakeholders are the
+firms being scored, investors allocating mechanically from the posted price, and
+an auditor who observes the evaluator's behaviour but not its weights.
 
-\textbf{The strategic tension.} An AI evaluator, unlike a market, can retrain.
-It need not follow the rule it announces. That is where the 2001 Nobel
-foundation stops~\cite{nobel2001}: costly signals carry information when
-information is unequal~\cite{spence1973}, but the receiver's rule is taken as
-fixed. Two recent results suggest an alternative discipline---cooperation can
-emerge from opponent-specific responses in repeated
-dilemmas~\cite{morozov2026}, and remains learnable under minimal
-observability~\cite{leung2026}---while Banchio, Skrzypacz and Yang show, for
-auctions, that credibility must be analysed as the gap between an announced rule
-and the rule the designer will actually follow~\cite{banchio2025}. I transplant
-that distinction to valuation. Figure~\ref{fig:teaser} is the resulting loop;
-its dashed channels are what make it strategic.
+\textbf{The strategic tension.} An AI evaluator, unlike a market, can retrain,
+so it need not follow the rule it announces. That is where the 2001 Nobel
+foundation stops~\cite{nobel2001}: costly signals carry information under
+unequal information~\cite{spence1973}, but the receiver's rule is fixed. Two
+recent results suggest an alternative discipline---cooperation emerges from
+opponent-specific responses in repeated dilemmas~\cite{morozov2026} and remains
+learnable under minimal observability~\cite{leung2026}---while Banchio,
+Skrzypacz and Yang show, for auctions, that credibility is the gap between an
+announced rule and the rule the designer will actually
+follow~\cite{banchio2025}. I transplant that distinction to valuation;
+Figure~\ref{fig:teaser} is the resulting loop.
 
 \begin{itemize}
 \item \textbf{Q1---Economics.} When an evaluator can revise its rule, does
 opponent-specific memory discipline disclosure the way commitment does, and at
 what cost in allocative efficiency?
 \item \textbf{Q2---Computation.} Can such a rule be made comparable and
-auditable: encoded as a finite game, run against a fixed rule on identical
-draws, and rechecked by someone who has neither the weights nor the data?
+auditable---encoded as a finite game, run against a fixed rule on identical
+draws, and rechecked by someone with neither the weights nor the data?
 \item \textbf{Q3---Behaviour.} Is the manipulation cost that makes memory work a
 real property of reporting officers, or an artefact of assuming convexity?
 \end{itemize}
 
-They are not separable. Q1's answer is a function of the cost distribution Q3
-supplies; Q3's test is interpretable only inside the game Q1 specifies; and Q2
+They are not separable: Q1's answer is a function of the cost distribution Q3
+supplies, Q3's test is interpretable only inside the game Q1 specifies, and Q2
 is what lets a third party check either. \textbf{Integrated question: when firms
 know the metrics an AI valuation model uses, under what conditions can an
 evaluator that remembers a particular firm substitute for one that commits to a
@@ -58,89 +48,82 @@ successor.
 \textbf{Players, actions, payoffs, timing, information.} A firm privately knows
 quality $\theta\in\{1,2,3\}$ and manipulation-cost type $k\in\{0.5,1,2\}$; an
 evaluator prices; investors allocate mechanically and are not strategic. Per
-round the firm picks effort $a\in\{0,1\}$ and window-dressing $m$ on a grid, and
-reports $s=\theta+a+m$. A \emph{strategy} maps the private type into a pair of
-actions across two rounds, which is why $m_1$ and $m_2$ can differ for one type
-even though the \emph{action} set is the same in both. Payoffs: firm
-$\pi=p-0.5a-km^{2}$; welfare $W=v-km^{2}$ with true value $v=\theta+a$; the
-evaluator is scored by $|p-v|$. Timing: the firm reports, the evaluator posts
-$p$, and only then is the outcome $y=v+\epsilon$ realised. Information: $\theta$,
-$k$ and $\epsilon$ are unobserved by the evaluator; the allowance $\bar m$ is
-announced. Solution concept: perfect Bayesian equilibrium in the
-Bayesian-equilibrium sense Harsanyi defined~\cite{harsanyi1968}. The
-course-scale computation reports type-by-type best responses against a posted
-rule rather than a full fixed point; that is a limitation, stated here so it is
-not read as a result.
+round the firm picks effort $a\in\{0,1\}$ and window-dressing $m$ on a grid and
+reports $s=\theta+a+m$. A \emph{strategy} maps the type into a pair of actions
+across two rounds---which is why $m_1$ and $m_2$ can differ for one type though
+the \emph{action} set is identical. Payoffs: firm
+$\pi=p-0.5a-km^{2}$; welfare $W=v-km^{2}$ with $v=\theta+a$; the evaluator is
+scored by $|p-v|$. Timing: the firm reports, the evaluator posts $p$, and only
+then is $y=v+\epsilon$ realised. Information: $\theta$, $k$ and $\epsilon$ are
+unobserved by the evaluator; the allowance $\bar m$ is announced. Solution
+concept: perfect Bayesian equilibrium in the sense Harsanyi
+defined~\cite{harsanyi1968}. The course-scale computation reports type-by-type
+best responses against a posted rule rather than a full fixed point---a
+limitation stated here so it is not read as a result.
 
-\textbf{The two rules.} \textsc{Committed}: the announced allowance $\bar m$ is
-the one followed, in every round and for every firm. \textsc{Revisable}: $\bar m$
-is still announced, but after round~1 the evaluator follows
-$\bar m+\lambda g_1$, where $g_1=(s_1-y_1)-\bar m$ is the residual inflation it
-can infer. The wedge between announced and followed is the Banchio et al.\
-object~\cite{banchio2025}, moved from auction design to valuation.
+\textbf{The two rules.} \textsc{Committed}: the announced $\bar m$ is the one
+followed, every round, every firm. \textsc{Revisable}: $\bar m$ is still
+announced, but after round~1 the evaluator follows $\bar m+\lambda g_1$, where
+$g_1=(s_1-y_1)-\bar m$ is the residual inflation it can infer. That wedge
+between announced and followed is the Banchio et al.\ object~\cite{banchio2025},
+moved from auction design to valuation.
 
-\textbf{What the benchmark settles and leaves open.} Frankel and Kartik
-establish that \emph{committing} to underuse manipulable data can improve
+\textbf{Benchmark and evidence status.} Frankel and Kartik establish that
+\emph{committing} to underuse manipulable data can improve
 allocation~\cite{frankel2022}; they leave open what a receiver that can retrain
-should do. \textbf{Evidence status.} $\theta$, $k$, $\bar m$, $\lambda$ and
-$\epsilon$ are hypothetical model primitives; every number in Section~3 is an
-observed output of my own simulation; cost convexity is \emph{inherited} as
-motivation from~\cite{fischbacher2013} and is not estimated; nothing is
-estimated from firm data.
+should do. $\theta$, $k$, $\bar m$, $\lambda$ and $\epsilon$ are hypothetical
+model primitives; every number in Section~3 is an observed output of my own
+simulation; cost convexity is \emph{inherited} as motivation
+from~\cite{fischbacher2013}, never estimated; nothing comes from firm data.
 
 \section{Answer to Q2: method and evaluation}
-\textbf{Inputs, algorithm, baseline, metric.} Inputs are $(\theta,k,\sigma,
-\lambda)$ and the action grid. The algorithm enumerates every two-round strategy
-and takes expected payoff over 20{,}000 draws of $\epsilon\sim U(-\sigma,\sigma)$.
-The baseline is \textsc{committed}; the single modification is to make the rule
-\textsc{revisable}. Following the instructor's Week~2 note, I record
-\emph{disclosure accuracy} (mean $|p-v|$) \emph{and deviation gain}---the
-expected payoff of the best strategy minus that of reporting honestly at the
-same effort---alongside welfare and manipulation magnitude.
+\textbf{Inputs, algorithm, baseline, metric.} Inputs are
+$(\theta,k,\sigma,\lambda)$ and the action grid. The algorithm enumerates every
+two-round strategy and takes expected payoff over 20{,}000 draws of
+$\epsilon\sim U(-\sigma,\sigma)$. The baseline is \textsc{committed}; the single
+modification makes the rule \textsc{revisable}. Following the instructor's
+Week~2 note I record \emph{disclosure accuracy} (mean $|p-v|$) \emph{and
+deviation gain}---the expected payoff of the best strategy minus that of
+reporting honestly at the same effort---alongside welfare.
 
 \textbf{The meaningful check.} The notebook re-implements JavaScript's
 \texttt{mulberry32} PRNG in Python and reproduces all four cases logged from the
-deployed browser Space: same draw ($\theta=2$, $k=0.5$), same $\epsilon$
-sequence, same prices, to the cent (\texttt{verify\_space\_replication}, cell~2;
-an assertion, so the run fails rather than quietly disagrees). Game and notebook
-are therefore the \emph{same} model, and the page now exposes the same two knobs
-the sweep varies, so a reader can reach the Section~4 threshold by hand (seed~2,
-$\sigma=2$: an honest firm is priced 2.00 against a true value of 4.00, where the
-committed rule says 3.00). Two scope differences remain and are not hidden. The
-page draws $\epsilon$ from three points $\{-\sigma,0,+\sigma\}$ while the notebook
-draws $\epsilon\sim U(-\sigma,\sigma)$, so the \emph{frequency} of mis-punishment
-differs ($2/3$ versus $(\sigma-\bar m)/\sigma$) even though the threshold
-$\sigma^{*}=\bar m$ does not; and the page plays one seed by hand where the
-notebook averages 20{,}000 draws over the full type space.
+deployed Space---same draw ($\theta=2$, $k=0.5$), same $\epsilon$ sequence, same
+prices, to the cent---as an assertion, so the run fails rather than quietly
+disagrees. Game and notebook are therefore the \emph{same} model, and the page
+exposes the same two knobs, so a reader reaches the Section~4 threshold by hand
+(seed~2, $\sigma=2$: an honest firm priced 2.00 against true value 4.00, where
+commitment says 3.00). One scope difference is not hidden: the page draws
+$\epsilon$ from $\{-\sigma,0,+\sigma\}$ and the notebook from
+$U(-\sigma,\sigma)$, so mis-punishment \emph{frequency} differs ($2/3$ versus
+$(\sigma-\bar m)/\sigma$) though the threshold $\sigma^{*}=\bar m$ does not.
 
-\textbf{Obtained} (simulated outputs of my own model; not evidence about any
-real firm). Averages are over all nine firm types.
+\textbf{Obtained} (simulated outputs of my own model, not evidence about any real
+firm; averaged over all nine types).
 \begin{itemize}
-\item \emph{Deviation gain halves} under \textsc{revisable}: $0.333\to0.167$ on
-the browser grid, $0.692\to0.346$ on the research grid, and it is flat in
-$\sigma$ across $[0,3]$. This is the margin on which H3 survives.
+\item \emph{Deviation gain halves} under \textsc{revisable}---$0.333\to0.167$ on
+the browser grid, $0.692\to0.346$ on the research grid---and is flat in $\sigma$
+across $[0,3]$. This is the margin on which H3 survives.
 \item \emph{Deterrence stops at the horizon.} The cheap type ($k=0.5$) sets
 $m_1=0$ under \textsc{revisable} but still $m_2=1$: memory disciplines every
 round that has a successor, and no more.
-\item \emph{Accuracy moves the other way, on every grid.} The revisable rule is
-\emph{less} accurate than the committed one under both grids ($0.750$ vs $0.667$
-on the browser grid, $0.869$ vs $0.571$ on the research grid), because its
-round-2 price carries the outcome noise while the committed rule merely deducts
-a constant. Welfare runs the opposite way on both grids ($5.833$ vs $5.667$;
-$5.632$ vs $5.263$): the committed rule buys its precision with burnt real
-resources---it reaches $|p-v|=0$ for the $k=0.5$ type only by inducing exactly
-the inflation it allows ($m=\bar m=1$).
-\item \emph{What the coarse grid does distort is the honest share.} It reports
-two-thirds of types as fully honest under both rules; on the research grid no
-type is ($0.000$ under both), because a finer $m$ grid always leaves a
-profitable small inflation. v1 promised to report grid sensitivity rather than
-hide it; this is that report, and it is why H3 is stated on deviation gain and
-welfare---magnitudes that survive the grid change---rather than on a binary
-honest/dishonest split, which does not.
+\item \emph{Accuracy moves the other way on every grid} ($0.750$ vs $0.667$
+browser; $0.869$ vs $0.571$ research), because the revisable round-2 price
+carries the noise while commitment deducts a constant. Welfare runs opposite on
+both ($5.833$ vs $5.667$; $5.632$ vs $5.263$): commitment buys precision with
+burnt resources, reaching $|p-v|=0$ for the $k=0.5$ type only by inducing
+exactly the inflation it allows.
+\item \emph{The coarse grid distorts the honest share}---two-thirds read as
+fully honest under both rules, against $0.000$ on the research grid, because a
+finer $m$ grid always leaves a profitable small inflation. This is the
+grid-sensitivity check v1 promised and never ran, and it is why H3 is stated on
+deviation gain and welfare---magnitudes that survive the grid change---not on a
+binary split.
 \end{itemize}
 
-\textbf{Planned, not obtained.} A CFR fixed point in OpenSpiel~\cite{lanctot2019}
-on the identical tree; horizons beyond two; heterogeneous evaluators.
+\textbf{Planned, not obtained.} A CFR fixed point in
+OpenSpiel~\cite{lanctot2019} on the identical tree; horizons beyond two;
+heterogeneous evaluators.
 
 \section{Answer to Q3: behaviour and competing explanations}
 \textbf{Mechanism and its competitor.} The model assumes a convex, privately
@@ -148,45 +131,40 @@ known manipulation cost---the behavioural reading of die-roll evidence that
 honesty is heterogeneous, with partial liars alongside honest and fully
 self-serving reporters~\cite{fischbacher2013}. The competing explanation is that
 reporting officers pay no such cost but reason boundedly: they do not compute
-that a revisable evaluator will price the inflation out next round, so what
-looks like cost is a reasoning limit~\cite{wright2020}.
+that a revisable evaluator prices the inflation out next round, so what looks
+like cost is a reasoning limit~\cite{wright2020}.
 
 \textbf{Evidence that discriminates.} The two predict opposite things about
-$\lambda$. A cost story predicts \emph{saturation}: once the anticipated
-punishment exceeds the gain, raising it further changes nothing. A
-bounded-reasoning story predicts continued response to a more visible
+$\lambda$: a cost story predicts \emph{saturation} once anticipated punishment
+exceeds the gain, bounded reasoning predicts continued response to more visible
 punishment. The sweep shows saturation---deviation gain falls
 $0.333\to0.250\to0.167$ as $\lambda$ goes $0\to0.25\to0.5$, then is flat to
 $\lambda=2$---while mispricing is minimised at $\lambda=0.25$ and rises
-monotonically after. \textbf{The $\lambda=1$ hard-coded in my v1 demo therefore
-buys no deterrence over $\lambda=0.5$ and costs accuracy}; the accuracy-optimal
-and deterrence-optimal memory strengths are both interior and are not the same.
-The feasible next test is a within-subject reporting experiment that varies
-$\lambda$ across rounds and elicits beliefs about the next-round price---the
-design my instructor suggested pairing with Xuantong~Fu (behavioural science),
-alongside Tian~Liang (economics) on the commitment side.
+thereafter. \textbf{The $\lambda=1$ hard-coded in my v1 demo therefore buys no
+deterrence over $\lambda=0.5$ and costs accuracy}; both optima are interior and
+they differ. The feasible next test is a within-subject reporting experiment
+varying $\lambda$ while eliciting beliefs about the next-round price.
 
 \textbf{Can memory punish the honest?} Yes, with a threshold. An honest firm
-($m=0$) is priced below its true value in $49.9\%$ of draws for every
-$\sigma>0$. But it is priced \emph{worse than under commitment} only once
-$\sigma>\bar m$, with share $(\sigma-\bar m)/\sigma$: simulation returns
-$0.198$, $0.331$, $0.500$, $0.668$ at $\sigma=1.25,1.5,2.0,3.0$ against an
-analytic $0.200$, $0.333$, $0.500$, $0.667$. On the mean the crossing comes
-later, at $\sigma=2\bar m$. So the disparate-impact risk is not everywhere: it
-is bounded by the ratio of outcome noise to the announced allowance. Small and
-young firms are precisely those with noisy outcomes, which makes that ratio the
-quantity a regulator would need.
+($m=0$) is priced below true value in $49.9\%$ of draws for every $\sigma>0$,
+but \emph{worse than under commitment} only once $\sigma>\bar m$, with share
+$(\sigma-\bar m)/\sigma$: simulation returns $0.198$, $0.331$, $0.500$, $0.668$
+at $\sigma=1.25,1.5,2.0,3.0$ against an analytic $0.200$, $0.333$, $0.500$,
+$0.667$; on the mean the crossing comes at $\sigma=2\bar m$. Disparate-impact
+risk is therefore bounded by noise over announced allowance---and small, young
+firms are precisely those with noisy outcomes, which makes that ratio what a
+regulator would need.
 
 \textbf{Limits, and what would change my mind.} Simulated results establish
 nothing about human or real AI behaviour. If $\lambda$-saturation vanished on a
-finer grid, or if elicited costs proved flat rather than convex, the deterrence
+finer grid, or elicited costs proved flat rather than convex, the deterrence
 result would be an artefact of my functional form and H3 would have to be
 withdrawn.
 
 \section{Advanced development and future directions}
 \textbf{Foundation and enduring question.} The enduring question is trust: when
 can a claim be believed by someone who cannot verify it directly? The 2001 Prize
-in Economic Sciences~\cite{nobel2001} established the organising answer---costly
+in Economic Sciences~\cite{nobel2001} gave the organising answer---costly
 signals carry information under unequal information~\cite{spence1973}---and the
 2007 Prize~\cite{nobel2007} made the rule itself a design object rather than a
 fixed environment. The computational lineage is the 2012 ACM A.M. Turing Award
@@ -195,15 +173,14 @@ proofs established that a claim can be verified \emph{without disclosing what
 makes it true}~\cite{goldwasser1989}---exactly what an outside auditor needs
 from a proprietary valuation model.
 
-\textbf{What is distinctive now, and what is unresolved.} The receiver is no
-longer a market with a fixed rule; it is a model that retrains, whose announced
-rule need not be the one it follows~\cite{perdomo2020,banchio2025}. Current work
-leaves two things open: whether adaptation can replace commitment, and how a
-third party could check either without the weights. This proposal advances that
-boundary by making the two rules comparable on one tree. Economics supplies the
-welfare criterion that accuracy alone misses; computation supplies the
-reproducible comparison; behaviour supplies the cost that decides whether
-deterrence is real. The integration yields the claim none of them holds
+\textbf{What is distinctive now.} The receiver is no longer a market with a
+fixed rule but a model that retrains, whose announced rule need not be the one it
+follows~\cite{perdomo2020,banchio2025}. Current work leaves open whether
+adaptation can replace commitment, and how a third party could check either
+without the weights; this proposal advances that boundary by making the two
+rules comparable on one tree. Economics supplies the welfare criterion accuracy
+misses, computation the reproducible comparison, behaviour the cost deciding
+whether deterrence is real. The integration yields the claim none holds
 alone~\cite{osullivan2025}: \emph{memory substitutes for commitment on the
 deterrence margin and only in non-terminal rounds, while opening a
 noise-dependent false-punishment channel whose threshold can be stated.}
@@ -212,93 +189,71 @@ noise-dependent false-punishment channel whose threshold can be stated.}
 \small
 \caption{From laureate foundations to a new interdisciplinary contribution.}
 \label{tab:roadmap}
-\begin{tabularx}{\columnwidth}{@{}p{14mm}Y@{}}
+\begin{tabularx}{\columnwidth}{@{}p{13mm}Y@{}}
 \toprule
 \textbf{Horizon} & \textbf{Milestone and evidence} \\
 \midrule
-Foundation & Spence's costly signalling (2001 Prize); Hurwicz--Maskin--Myerson
-make the rule designable (2007); Goldwasser--Micali make verification possible
-without disclosure (2012 Turing Award). Retained insight: credibility comes from
-cost, and can be checked without revealing the secret. \\
-PS1 & Two-period disclosure game; \textsc{committed} vs \textsc{revisable} on
-identical draws, 20{,}000 per cell. Deviation gain $0.692\to0.346$;
-false-punishment threshold $\sigma^{*}=\bar m$. \emph{Evidence: simulated, own
-model, rerunnable notebook.} \\
+Foundation & Costly signalling (2001); the rule as design object (2007);
+verification without disclosure (2012 Turing Award). Retained insight:
+credibility comes from cost and can be checked without revealing the secret. \\
+PS1 & \textsc{Committed} vs \textsc{revisable} on identical draws, 20{,}000 per
+cell. Deviation gain $0.692\to0.346$; threshold $\sigma^{*}=\bar m$.
+\emph{Simulated, own model, rerunnable notebook.} \\
 Next study & Elicit manipulation costs within-subject while varying $\lambda$;
-CFR fixed point on the same tree; horizon $>2$ to separate memory from
-last-period unravelling. \emph{Discriminating test: does deterrence keep rising
-in $\lambda$?} \\
+CFR fixed point on the same tree; horizon $>2$. \emph{Discriminating test: does
+deterrence keep rising in $\lambda$?} \\
 Longer term & Validation across markets and audit regimes; disparate-impact
-reporting by firm size as a standard output rather than an appendix. \\
-2056 & An auditable protocol certifying a proprietary scoring rule's
-gaming-resistance without disclosure of its weights. \\
+reporting by firm size as standard output. \\
+2056 & An auditable protocol certifying a scoring rule's gaming-resistance
+without disclosure of its weights. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056 I aspire to be recognised for a design protocol that lets an outsider
-test whether a proprietary valuation model rewards genuine value or cheap
-reporting, without requiring the model's weights---addressing the enduring
-question of trust under unequal information, in an era whose evaluators retrain
-faster than they can commit. Building on Akerlof, Spence and Stiglitz (2001),
-Hurwicz, Maskin and Myerson (2007), and Goldwasser and Micali (2012), I will
-integrate economics (when memory substitutes for commitment), computer science
-(verification without disclosure) and behavioural science (manipulation costs
-elicited rather than assumed) to advance the boundary at which an adaptive
-evaluator can be held accountable. Progress will be demonstrated by the
+\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.} By
+2056 I aspire to be recognised for a design protocol that lets an outsider test
+whether a proprietary valuation model rewards genuine value or cheap reporting,
+without requiring its weights---addressing trust under unequal information in an
+era whose evaluators retrain faster than they can commit. Building on Akerlof,
+Spence and Stiglitz (2001), Hurwicz, Maskin and Myerson (2007), and Goldwasser
+and Micali (2012), I will integrate economics (when memory substitutes for
+commitment), computer science (verification without disclosure) and behavioural
+science (costs elicited rather than assumed) to advance the boundary at which an
+adaptive evaluator can be held accountable. Progress will be demonstrated by the
 milestones in Table~\ref{tab:roadmap}, with intellectual merits in the
 conditions under which adaptation and commitment are interchangeable, and
-practical impacts for small firms currently priced by rules they cannot inspect.
+practical impacts for small firms priced by rules they cannot inspect.
 
 \section*{Open Science Statement}
 \noindent\textbf{GitHub:} \url{\GitHubLink}\quad
-\textbf{Google Colab:} \url{\ColabLink}
+\textbf{Colab:} \url{\ColabLink}
 
-\noindent Released: \texttt{companion/src/strategic\_disclosure.py} (the model and the
-bit-exact Python twin of the deployed Space), \texttt{companion/src/run\_experiments.py}
-(every number in Sections~3--4), \texttt{companion/notebooks/PS1\_strategic\_disclosure.ipynb},
-\texttt{companion/results/*.csv} with both figures, and a mirror of the Space's
-\texttt{index.html}. Inputs are synthetic; no data are collected. Dependencies:
-\texttt{numpy}, \texttt{pandas}, \texttt{matplotlib}. Shortest reproducible run, from \texttt{companion/}:
-\texttt{pip install -r requirements.txt \&\& python src/run\_experiments.py}
----deterministic (fixed seeds, no wall-clock, no network), roughly four seconds,
-and it asserts the browser replication before writing any result.
-\texttt{python -m unittest discover -s tests} runs 15 tests, each one a claim
-this paper makes. Tested at
-commit \texttt{\CommitHash}. Reuse terms: MIT.
+\noindent Released: the model and its bit-exact Python twin of the Space, the
+script generating every number in Sections~3--4, the notebook,
+\texttt{results/*.csv} with both figures, and a mirror of the Space's
+\texttt{index.html}. Inputs are synthetic; no data are collected. From
+\texttt{companion/}: \texttt{pip install -r requirements.txt \&\& python
+src/run\_experiments.py}---deterministic, about four seconds, and it asserts the
+browser replication before writing any result;
+\texttt{python -m unittest discover -s tests} runs 15 tests, each a claim this
+paper makes. Tested at commit \texttt{\CommitHash}. Reuse: MIT.
 
 \section*{Statement of Contribution to the UN's SDGs}
 \noindent\textbf{Hugging Face:} \url{\DemoLink}
 
-\noindent Through an open-access browser game, this project aims to support
+\noindent Through an open-access browser game this project supports
 SDG~4---Quality Education~\cite{un_sdg4} by helping students and non-specialist
-practitioners learn \emph{why a committed rule and a revisable rule price the
-same report differently}, through play: the user picks effort and
-window-dressing, switches the evaluator, and reads both prices off identical
-draws. Access needs: any browser, no account, no installation. Learning
-instruction, in two steps: first run the same actions under both rules at the
-defaults and compare $|p-v|$; then raise the noise control to $\sigma=2$ on
-seed~2 and play honestly ($a=1$, $m=0$) twice---the page flags the round in which
-the revisable rule prices an honest firm below what the committed rule would
-have, which is the threshold $\sigma^{*}=\bar m$ arrived at by hand rather than
-read off a figure. Feasible evaluation: a pre/post item asking which rule
-over-prices a manipulator and which under-prices an honest firm, administered to
-a workshop cohort. The
-released tool is an output; learning improvement remains to be evaluated. On
-SDG Target~9.3~\cite{un2025,unga2015}, manipulation capacity is unevenly
-distributed---large firms reshape reported metrics cheaply and small firms
-cannot---so a gameable model routes capital toward manipulators and under-prices
-small honest firms; the course-scale observable is the simulated allocation gap
-by firm size, while the official indicator 9.3.2 lies beyond what a course
-artifact can move.
-
-%% ===========================================================================
-%% OPTIONAL CUT #1 (~40 words). If the main text runs past two pages, comment
-%% out this whole section first -- it is not one of the five required sections.
-%% ===========================================================================
-\section*{Submission milestones}
-\noindent\footnotesize v1 submitted 13 September 2026; class review 14
-September; author response and this revised v2 follow the proposed dates.
-Appendix~E row~8 and Appendix~D record each reflection and revision.
-%% =========================== end OPTIONAL CUT #1 ===========================
+practitioners learn \emph{why a committed and a revisable rule price the same
+report differently}, through play. Access: any browser, no account, no install.
+Learning path: run identical actions under both rules at the defaults and
+compare $|p-v|$; then set $\sigma=2$ on seed~2 and report honestly twice---the
+page flags the round where the revisable rule prices an honest firm below what
+commitment would have, reaching $\sigma^{*}=\bar m$ by hand rather than off a
+figure. Evaluation: a pre/post item asking which rule over-prices a manipulator
+and which under-prices an honest firm. The tool is an output; learning gain
+remains to be evaluated. On Target~9.3~\cite{un2025,unga2015}, manipulation
+capacity is unevenly distributed---large firms reshape metrics cheaply, small
+firms cannot---so a gameable model routes capital toward manipulators and
+under-prices small honest firms; the course-scale observable is the simulated
+allocation gap by firm size, while indicator 9.3.2 lies beyond a course
+artifact.
