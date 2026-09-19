@@ -1,0 +1,57 @@
+%% Teaser figure body -- ONE source of truth.
+%% Included by main.tex (inline, no external PDF) and by ps1_teaser.tex (standalone).
+%% Requires: tikz + libraries arrows.meta, positioning; colours CourseBlue, CourseTeal.
+\begin{tikzpicture}[
+  >=Latex,
+  box/.style   = {draw, rounded corners, align=center, text width=36mm,
+                  inner sep=3pt, font=\small},
+  memo/.style  = {draw, rounded corners, dashed, align=center, text width=36mm,
+                  inner sep=3pt, font=\scriptsize},
+  lbl/.style   = {font=\scriptsize, align=center, inner sep=2pt, fill=white},
+  arrow/.style = {->, thick},
+  darrow/.style= {->, thick, dashed, CourseTeal}
+]
+
+%% ---- main row: firm -> evaluator -> investors -------------------------
+\node[box, fill=CourseBlue!8] (firm) at (0,0)
+  {\textbf{Firm}\\[2pt]\scriptsize privately knows $\theta$, cost type $k$;\\
+   picks effort $a$ + window-dressing $m$};
+
+\node[box, fill=CourseTeal!8] (eval) at (6.6,0)
+  {\textbf{AI valuation evaluator}\\[2pt]\scriptsize
+   \emph{committed}: announced $=$ followed $\bar m$\\
+   \emph{revisable}: follows $\bar m + \lambda g_{t-1}$};
+
+\node[box, fill=CourseBlue!8] (inv) at (13.2,0)
+  {\textbf{Investors}\\[2pt]\scriptsize allocate capital mechanically\\
+   on the posted price};
+
+\draw[arrow] (firm) -- node[lbl, above] {report $s=\theta+a+m$} (eval);
+\draw[arrow] (eval) -- node[lbl, above] {posted price $p$} (inv);
+
+%% ---- memory input (the treatment being tested) ------------------------
+\node[memo] (hist) at (6.6,-2.5)
+  {this firm's past report $s_{t-1}$ and realised\\ outcome $y_{t-1}$:\;
+   $g_{t-1}=(s_{t-1}-y_{t-1})-\bar m$};
+\draw[darrow] (hist) -- node[lbl, right, pos=0.55] {revisable rule only} (eval);
+
+%% ---- the firm studies the rule (what makes the loop strategic) --------
+\draw[darrow] (firm.north) to[out=35, in=145]
+  node[lbl, above, pos=0.5] {firm infers the scoring weights} (eval.north);
+
+%% ---- payoff rail back to the firm, routed clear of everything else ----
+\draw[arrow] (inv.south) -- (13.2,-4.1) --
+  node[lbl, above, pos=0.5]
+    {payoff $p - 0.5a - km^{2}$ carried into the next round} (0,-4.1) -- (firm.south);
+
+%% ---- hypotheses, with their CURRENT evidence status -------------------
+\node[font=\scriptsize, align=center, text width=150mm] at (6.6,-5.3)
+  {\textbf{H1} manipulation concentrates on high-weight, cheap-to-fake metrics
+   \emph{(simulated: on the browser grid only the $k=0.5$ type inflates)}.\quad
+   \textbf{H2} rational manipulation burns resources without adding information
+   \emph{(simulated support: welfare $3.00$ vs $3.50$)}.\quad
+   \textbf{H3} memory sustains disclosure a committed rule cannot
+   \emph{(supported on deviation gain, in non-terminal rounds only; not supported on accuracy)}.
+   \\[2pt] All three are simulated outputs of this model, not evidence about human or real AI behaviour.};
+
+\end{tikzpicture}

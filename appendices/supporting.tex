@@ -1,12 +1,70 @@
 \clearpage
-\section*{References}
+\section*{Author Notes}
+
+\subsection*{Acknowledgements}
+I thank Prof.\ Luyao Zhang, Program Chair, and Prof.\ Ken Rogerson, Program
+Discussant, of the \emph{2056 Nobel and Turing Laureate Program Launch Workshop},
+held at Duke Kunshan University (IB 2050) on September~7, 2026. Prof.\ Zhang's
+written Week~2 comment---``compare fixed and revisable evaluator rules in the
+same game; record deviation gains as well as disclosure accuracy''---is the
+instruction that produced Sections~2 and~3 of this version, together with her
+pointer to Banchio, Skrzypacz and Yang's announced-versus-followed
+distinction~\cite{banchio2025}, which I had not read before it was suggested.
+
+I thank Yitong Lin and Yichen Shen, my teammates in \WorkshopSession, with whom
+the deployed Hugging Face Space was built, and Zhengjun He and Zijie Wang for
+the conversations that narrowed five candidate topics to this one. I thank my
+two PS1 reviewers, Aaron Wang and Zhenning Wang,
+from the September~14 class review. Aaron Wang's question---\emph{can memory
+sometimes incorrectly punish an honest firm?}---is answered with a threshold in
+Section~4, and Zhenning Wang's request to test memory strength before drawing a
+conclusion produced the $\lambda$ sweep that overturned my own $\lambda=1$
+default. I also thank the rest of the COMSCI/ECON~206 Autumn~2026 Session~1
+class for their questions. I am responsible for the proposal and for any
+remaining errors.
+
+\subsection*{Individual contribution}
+I chose the research question and the inherit/advance/tension framing; specified
+the two-period game, the two evaluator rules, and H1--H3; wrote
+\texttt{companion/src/strategic\_disclosure.py}, \texttt{companion/src/run\_experiments.py} and the
+Colab notebook, including the Python port of \texttt{mulberry32} and the
+replication assertions; ran and interpreted every sweep reported here; wrote the
+responsible-boundary analysis and the arithmetic check on the museum data wall;
+and wrote this paper. The deployed browser Space (\texttt{index.html}) began as
+joint work with Yitong Lin and Yichen Shen in the Week~2 workshop and is credited
+as such in Appendix~A.2; the $\sigma$ and $\lambda$ controls, the honest-firm
+mis-punishment flag, and the committed/revisable renaming are my individual PS1
+additions to that base. The Python model, all Section~3--4 results, and this
+proposal are mine. Program roles, peer review and instructor feedback are
+acknowledged above and do not imply co-authorship. AI assistance is disclosed in
+Appendix~A.1.
+
+%% NOTE: acmart's thebibliography prints its own "REFERENCES" heading.
+%% Do NOT add \section*{References} here -- that is what printed it twice in v1.
+\clearpage
 \begin{thebibliography}{99}
+
+\bibitem{banchio2025}
+M. Banchio, A. Skrzypacz, and F. Yang. 2025.
+Dynamic threats to credible auctions.
+In \emph{Proceedings of the 26th ACM Conference on Economics and Computation (EC '25)}.
+Preprint: https://arxiv.org/abs/2509.21439
+\emph{(Reference supplied in the instructor's Week~2 handout; verify the final
+EC page range against the ACM DL entry before submitting.)}
 
 \bibitem{brown2019}
 G. W. Brown, O. R. Gredil, and S. N. Kaplan. 2019.
 Do private equity funds manipulate reported returns?
 \emph{Journal of Financial Economics} 132, 2 (2019), 267--297.
 https://doi.org/10.1016/j.jfineco.2018.10.011
+
+\bibitem{dioptra}
+National Institute of Standards and Technology. 2026.
+Dioptra: Test software for the characterization of AI technologies.
+Computer software; NIST-authored portions not subject to U.S. copyright under
+17 U.S.C. \S\,105, otherwise CC BY 4.0.
+Documentation: https://pages.nist.gov/dioptra/ ;
+repository: https://github.com/usnistgov/dioptra
 
 \bibitem{fischbacher2013}
 U. Fischbacher and F. Föllmi-Heusi. 2013.
@@ -20,11 +78,24 @@ Improving information from manipulable data.
 \emph{Journal of the European Economic Association} 20, 1 (2022), 79--115.
 https://doi.org/10.1093/jeea/jvab017
 
+\bibitem{goldwasser1989}
+S. Goldwasser, S. Micali, and C. Rackoff. 1989.
+The knowledge complexity of interactive proof systems.
+\emph{SIAM Journal on Computing} 18, 1 (1989), 186--208.
+https://doi.org/10.1137/0218012
+
 \bibitem{hardt2016}
 M. Hardt, N. Megiddo, C. Papadimitriou, and M. Wootters. 2016.
 Strategic classification.
 In \emph{Proceedings of ITCS '16}. 111--122.
 https://doi.org/10.1145/2840728.2840730
+
+\bibitem{harsanyi1968}
+J. C. Harsanyi. 1968.
+Games with incomplete information played by ``Bayesian'' players, Part II:
+Bayesian equilibrium points.
+\emph{Management Science} 14, 5 (1968), 320--334.
+https://doi.org/10.1287/mnsc.14.5.320
 
 \bibitem{healy1999}
 P. M. Healy and J. M. Wahlen. 1999.
@@ -32,15 +103,59 @@ A review of the earnings management literature and its implications for standard
 \emph{Accounting Horizons} 13, 4 (1999), 365--383.
 
 \bibitem{lanctot2019}
-M. Lanctot, E. Lockhart, J. Lespiau, V. Zambaldi, S. Upadhyay, J. Pérolat, et al. 2019.
+M. Lanctot, E. Lockhart, J.-B. Lespiau, V. Zambaldi, S. Upadhyay, J. Pérolat, et al. 2019.
 OpenSpiel: A framework for reinforcement learning in games.
-Google DeepMind.
-https://openspiel.readthedocs.io/
+Google DeepMind. Computer software, Apache License 2.0.
+Documentation: https://openspiel.readthedocs.io/ ;
+repository: https://github.com/google-deepmind/open\_spiel
+
+\bibitem{leung2026}
+C.-W. Leung, P. Turrini, F. P. Santos, and M. Musolesi. 2026.
+Learning to cooperate with minimal observability.
+\emph{Proceedings of the AAAI Conference on Artificial Intelligence} 40, 35 (2026), 29521--29529.
+https://doi.org/10.1609/aaai.v40i35.40194
+
+\bibitem{morozov2026}
+A. V. Morozov and A. Feigel. 2026.
+Emergence of cooperation due to opponent-specific responses in Prisoner's Dilemma.
+\emph{Proceedings of the National Academy of Sciences} 123, 21 (2026), e2513282123.
+https://doi.org/10.1073/pnas.2513282123
+
+\bibitem{nist2023}
+National Institute of Standards and Technology. 2023.
+Artificial Intelligence Risk Management Framework (AI RMF 1.0).
+NIST AI 100-1.
+https://doi.org/10.6028/NIST.AI.100-1
+
+\bibitem{nobel2001}
+The Royal Swedish Academy of Sciences. 2001.
+The Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2001:
+George A. Akerlof, A. Michael Spence and Joseph E. Stiglitz, ``for their analyses
+of markets with asymmetric information''.
+https://www.nobelprize.org/prizes/economic-sciences/2001/summary/
+
+\bibitem{nobel2007}
+The Royal Swedish Academy of Sciences. 2007.
+The Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2007:
+Leonid Hurwicz, Eric S. Maskin and Roger B. Myerson, ``for having laid the
+foundations of mechanism design theory''.
+https://www.nobelprize.org/prizes/economic-sciences/2007/summary/
+
+\bibitem{osullivan2025}
+G. O'Sullivan. 2025.
+U-shaped learning: A new model for transdisciplinary education.
+\emph{Humanities and Social Sciences Communications} 12, 1 (2025), Article 182.
 
 \bibitem{perdomo2020}
 J. C. Perdomo, T. Zrnic, C. Mendler-Dünner, and M. Hardt. 2020.
 Performative prediction.
 In \emph{Proceedings of ICML 2020}, PMLR 119, 7599--7609.
+
+\bibitem{spence1973}
+A. M. Spence. 1973.
+Job market signaling.
+\emph{The Quarterly Journal of Economics} 87, 3 (1973), 355--374.
+https://doi.org/10.2307/1882010
 
 \bibitem{stein1989}
 J. C. Stein. 1989.
@@ -50,59 +165,495 @@ https://doi.org/10.2307/2937861
 
 \bibitem{strathern1997}
 M. Strathern. 1997.
-“Improving ratings”: Audit in the British university system.
+``Improving ratings'': Audit in the British university system.
 \emph{European Review} 5, 3 (1997), 305--321.
 
-\bibitem{wright2020}
-J. R. Wright and K. Leyton-Brown. 2020.
-A formal separation between strategic and nonstrategic behavior.
-In \emph{Proceedings of the 21st ACM Conference on Economics and Computation}, 535--536.
-
-\bibitem{nist2023}
-National Institute of Standards and Technology. 2023.
-Artificial Intelligence Risk Management Framework (AI RMF 1.0).
-NIST AI 100-1.
-https://doi.org/10.6028/NIST.AI.100-1
-
-\bibitem{dioptra}
-National Institute of Standards and Technology. 2026.
-Dioptra: Test software for the characterization of AI technologies.
-https://pages.nist.gov/dioptra/
+\bibitem{turing2012}
+Association for Computing Machinery. 2012.
+ACM A.M. Turing Award: Shafi Goldwasser and Silvio Micali, for transformative
+work that laid the complexity-theoretic foundations for the science of
+cryptography.
+https://amturing.acm.org/award\_winners/goldwasser\_8627889.cfm
 
 \bibitem{un2025}
 United Nations. n.d.
 The 17 Goals and their targets.
 https://sdgs.un.org/goals
 
+\bibitem{un_sdg4}
+United Nations. n.d.
+Goal 4: Quality Education.
+https://sdgs.un.org/goals/goal4
+
+\bibitem{unga2015}
+United Nations General Assembly. 2015.
+Transforming our world: The 2030 Agenda for Sustainable Development (A/RES/70/1).
+https://sdgs.un.org/2030agenda
+
+\bibitem{wright2020}
+J. R. Wright and K. Leyton-Brown. 2020.
+A formal separation between strategic and nonstrategic behavior.
+In \emph{Proceedings of the 21st ACM Conference on Economics and Computation}, 535--536.
+https://doi.org/10.1145/3391403.3399525
+
 \end{thebibliography}
 
 \clearpage
-\section*{Appendix A --- Technical Artifact Record}
-\textbf{Live Space:} \url{https://huggingface.co/spaces/24hours6964/strategic-disclosure-game}
+\appendix
+\section{Technical details and reproducibility}
+\emph{Unlimited; not counted toward the two-page main statement. Every entry
+records what the artifacts actually do, not what they were designed to do.}
 
-\textbf{Repository:} \url{https://huggingface.co/spaces/24hours6964/strategic-disclosure-game/tree/main}
+\subsection{AI-use disclosure}
+\textbf{Human-Only.} Initial reasoning, the choice of research question, the
+inherit/advance/tension framing, H1--H3, the two-rule design, the
+responsible-boundary analysis, the handwritten Week~1--2 reflections, and the
+peer reviews I wrote for two classmates were produced without generative AI.
 
-\textbf{Version tested:} 6 September 2026; Space commit e6a0f5f; static single-file \texttt{index.html}. The deployed page was externally re-fetched and returned HTTP 200 with no external resource references and no fetch/XMLHttpRequest calls.
+\textbf{Tool.} Anthropic Claude (Opus~5) via the Claude Code CLI, and ChatGPT;
+5--6 September 2026 (v1) and 17 September 2026 (v2).
 
-\textbf{Mechanism.} The firm privately knows $\theta\in\{1,2,3\}$, chooses $a\in\{0,1\}$ and $m\in\{0,1,2\}$, and reports $s=\theta+a+m$. True value is $v=\theta+a$ and realised outcome is $y=v+\epsilon$, where $\epsilon\in\{-0.5,0,+0.5\}$. Static price is $p=\max(0,s-\bar m)$ with $\bar m=1$. Memory price in round 2 is $p=\max(0,s-\bar m-\lambda g_1)$, with $\lambda=1$ and $g_1=(s_1-y_1)-\bar m$. Firm payoff is $p-0.5a-km^2$ and welfare is $v-km^2$.
+\textbf{Purpose, v2.} Reading the four course rubric documents against my v1 and
+listing the gaps; drafting prose; implementing the Python port of
+\texttt{mulberry32}, the sweep harness and the notebook; typesetting.
 
-\textbf{Boundary test.} With seed 2026, $\theta=2,k=0.5$, and $a=0,m=2$ in both rounds, memory changes price from 3.00 to 2.00, while static remains at 3.00. Mispricing under memory falls from 1.00 to 0.00 in round 2.
+\textbf{Representative prompts.} ``Read the PS1 assignment, grading guide,
+scorecard and roadmap, compare them against my v1 source, and list what is
+missing.'' / ``Port the deployed Space's \texttt{mulberry32} PRNG to Python and
+assert that the four logged browser cases reproduce exactly.'' / ``Sweep outcome
+noise and memory strength; report deviation gain as well as disclosure
+accuracy.''
 
-\textbf{Limitations.} The deployed Space has no CFR solver or learning agent; those belong to the research artifact. The behavioural cost distribution has not been elicited from human subjects, the discrete grid has not been shown to preserve a continuous-game equilibrium, and the memory evaluator has not been tested against deliberate false-history construction. No output should be interpreted as evidence about a real firm.
+\textbf{Accepted.} The five-section restructure to match the template; the
+committed/revisable naming; the Python replication harness; the grid-sensitivity
+comparison.
+
+\textbf{Rejected.} Any phrasing that presented H1--H3 as established findings;
+any claim that the simulation speaks to human or real-AI behaviour; a suggested
+reading of the $\lambda$ sweep that omitted the accuracy cost.
+
+\textbf{Substantially changed by me.} The interpretation of the $\lambda$
+saturation as \emph{discriminating evidence} between a cost story and a
+bounded-reasoning story is mine, and it is the reason Section~4 exists in this
+form. The decision to state H3 on deviation gain and welfare rather than on the
+honest share---after seeing that the coarse grid reports two-thirds of types as
+fully honest while a finer grid reports none---is mine.
+
+\textbf{Verification.} AI output is not treated as a source. Every reference was
+checked against the publisher page or DOI; every number in Sections~3--4 was
+regenerated by \texttt{python companion/src/run\_experiments.py} and the analytic
+thresholds in Section~4 were derived by hand and then checked against the
+simulation. The human author is responsible for every claim, citation and
+computation.
+
+\subsection{Links, authorship, versions}
+\textbf{GitHub (code, results, notebook):} \url{\GitHubLink}, commit
+\texttt{\CommitHash}.\quad
+\textbf{Google Colab:} \url{\ColabLink}.\quad
+\textbf{Live Space:} \url{\DemoLink}; source at
+\url{https://huggingface.co/spaces/24hours6964/strategic-disclosure-game/blob/main/index.html},
+served at \url{https://24hours6964-strategic-disclosure-game.static.hf.space}.
+
+\textbf{Authorship.} The Space is joint work with Yitong Lin and Yichen Shen.
+The Python model, the notebook, every result in Sections~3--4, and this proposal
+are mine.
+
+\textbf{Space versions.} The Week~2 version (commit \texttt{e6a0f5f}, tested 6
+September 2026) was re-fetched from outside the editing session and returned
+HTTP~200 with a 20{,}982-byte \texttt{index.html}, zero external resource
+references and zero \texttt{fetch}/\texttt{XMLHttpRequest} calls. For v2 the page
+gained two controls---outcome noise $\sigma$ and memory strength $\lambda$---so the
+demo can reach the results the notebook reports. \textbf{>>> FILL IN after
+redeploying:} the new commit hash and test date, and re-run the external fetch
+(expect roughly 27.0\,kB). The static-SDK, no-runtime and no-external-resource
+claims are unaffected by the edit and were re-checked on the source; the byte
+count and hash were not, and must not be copied forward. The controls are
+strictly additive: at their defaults ($\sigma=0.5$, $\lambda=1$) every price is
+bit-identical to \texttt{e6a0f5f}, which is what lets
+\texttt{verify\_space\_replication()} still assert against the Week~2 log.
+
+\textbf{Environment.} Python 3.11; \texttt{numpy}, \texttt{pandas},
+\texttt{matplotlib}. Fixed seeds throughout (\texttt{default\_rng(11)} for the
+sweeps, \texttt{default\_rng(7)} for the analytic-check sample); no wall-clock,
+no network, no hidden state. Full run: about four seconds.
+
+\textbf{Tools cited with version and licence:} OpenSpiel, Apache 2.0, tag
+\texttt{v2.0.2} (12 Aug 2026), commit \texttt{d7c4fc2}, accessed 5 Sep 2026.
+Dioptra, NIST-authored portions not under U.S. copyright (17 U.S.C. \S\,105) and
+otherwise CC BY 4.0; no GitHub release published, latest stable tag
+\texttt{1.1.0} (19 Feb 2026), commit \texttt{d28451c}, accessed 5 Sep 2026.
+
+\subsection{Mechanism, transcribed from the deployed \texttt{index.html}}
+\textbf{Draw (on Reset).} A seeded PRNG (\texttt{mulberry32}, default seed 2026)
+picks $\theta\in\{1,2,3\}$ and $k\in\{0.5,1,2\}$. Same seed $\Rightarrow$ same
+draw.
+\textbf{Actions.} $a\in\{0,1\}$; $m$ from $\{0,1,2\}$ or a typed custom value.
+\textbf{Value and report.} $v=\theta+a$; $s=\theta+a+m$; outcome $y=v+\epsilon$
+with $\epsilon\in\{-\sigma,0,+\sigma\}$ uniform, revealed only after pricing;
+$\sigma$ is a control, default $0.5$ (the Week~2 fixed value).
+\textbf{Committed price.} $p=\max(0,\,s-\bar m)$ with announced $\bar m=1$.
+\textbf{Revisable price.} Round~1 identical. Round~2:
+$p=\max(0,\,s-\bar m-\lambda g_1)$ with $g_1=(s_1-y_1)-\bar m$ and $\lambda$ a
+control, default $1$. Because $g_1$ can be negative, the revisable rule can
+also price an honest firm \emph{up}.
+\textbf{Payoffs.} $\pi=p-0.5a-km^{2}$; $W=v-km^{2}$; mispricing $=|p-v|$. No
+other rule is implemented: the Space contains no audit intensity, no CFR solver
+and no learning agent.
+
+\subsection{Replication of the browser artifact}
+\texttt{strategic\_disclosure.Space} ports \texttt{mulberry32} and
+\texttt{Math.imul} to Python as unsigned 32-bit arithmetic.
+\texttt{verify\_space\_replication()} asserts, and the notebook fails loudly if
+any of these disagree:
+
+\begin{itemize}
+\item \emph{Draw.} Seed 2026 $\Rightarrow$ $\theta=2$, $k=0.5$.
+\item \emph{Boundary, revisable} ($a=0$, $m=2$ twice). R1: $v=2.00$, $s=4.00$,
+$\epsilon=0.00$, $y=2.00$, price 3.00, $|p-v|=1.00$, $\pi=1.00$,
+$g_1=1.00$. R2: price 2.00, $|p-v|=0.00$, $\pi=0.00$.
+\item \emph{Boundary, committed control.} Identical seed and actions: 3.00 in
+both rounds, $|p-v|=1.00$ in both, $\pi=1.00$ in both. Only the rule differs.
+\item \emph{Typical} ($a=1$, $m=0$, an honest firm; $v=3.00$). Committed: 2.00
+twice, $|p-v|=1.00$---the announced allowance is deducted from an honest report
+too. Revisable: 2.00 then 3.00, carrying $g_1=-1.00$, so $|p-v|$ falls to 0.00.
+\item \emph{Intentionally invalid} ($m=7$, then $m=$``abc''). Rejected at input:
+no report submitted, round counter unchanged, no state modified---not a clamp,
+not a silent default, not an uncaught exception. The Python twin raises
+\texttt{ValueError} at the same boundary.
+\end{itemize}
+
+\subsection{Sweeps, and what v1 got wrong}
+v1 reported four runs on one seed and noted that $\epsilon$ drew $0.00$ in all
+six priced rounds, leaving the noise channel untested. An audit over 500 seeds
+(\texttt{companion/results/seed\_audit.csv}) shows that outcome occurs for $12.8\%$ of
+seeds; seed 2026 is one of them. It was not a bug, but it was a one-in-eight
+corner that v1 then generalised from. v2 replaces it with 20{,}000 draws per
+cell.
+
+\noindent\textbf{Files.} \texttt{companion/results/sweep\_noise.csv} (Section~3,
+bullets 1 and 3), \texttt{companion/results/false\_punishment.csv} (Section~4 thresholds),
+\texttt{companion/results/sweep\_lambda\_sigma0.5.csv} and
+\texttt{...sigma1.5.csv} (Section~4 saturation),
+\texttt{companion/results/grid\_sensitivity.csv} (Section~3, bullet 3),
+\texttt{companion/results/per\_type\_detail.csv} (Section~3, bullets 2 and 4),
+\texttt{companion/results/seed\_audit.csv}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_noise.pdf}
+\caption{Outcome noise $\sigma$, at $\lambda=1$, averaged over all nine firm
+types. Left: disclosure accuracy. Centre: the share of honest firms priced worse
+than they would be under commitment---zero until $\sigma$ exceeds the announced
+allowance $\bar m=1$, then $(\sigma-\bar m)/\sigma$. Right: deviation gain, which
+the revisable rule roughly halves at every noise level. Dotted line marks
+$\sigma=2\bar m$. Simulated; not evidence about real firms.}
+\Description{Three line charts sharing an x axis of outcome noise sigma from 0
+to 3. The left panel shows mean absolute pricing error: the committed rule is a
+flat line at about 0.67, the revisable rule rises from 0.67 to about 1.27. The
+centre panel shows the share of honest firms priced worse than under commitment,
+flat at zero until sigma equals 1 and then rising towards 0.67. The right panel
+shows deviation gain, with the committed rule flat near 0.33 and the revisable
+rule flat near 0.17.}
+\label{fig:noise}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.78\columnwidth]{figures/fig_lambda.pdf}
+\caption{Memory strength $\lambda$ at $\sigma=0.5$. Accuracy is minimised at
+$\lambda=0.25$ and degrades monotonically thereafter, while deterrence
+(Section~4) saturates by $\lambda=0.5$. The $\lambda=1$ hard-coded in the v1 demo
+(dotted) is on the wrong side of both. Simulated.}
+\Description{A line chart of mean absolute pricing error against memory strength
+lambda from 0 to 2, at noise level 0.5. The revisable rule dips to a minimum of
+about 0.59 at lambda 0.25 and then rises steadily to about 1.16 at lambda 2. A
+dashed horizontal line marks the committed rule at about 0.67. A dotted vertical
+line marks lambda equals 1.}
+\label{fig:lambda}
+\end{figure}
+
+\subsection{Responsible boundary}
+\textbf{Runtime.} Static SDK confirmed: no Hugging Face CPU/GPU application
+runtime, no backend, no database, no secret, no API call, no paid service.
+\emph{This is not a zero-impact claim:} hosting, network transfer and
+client-side CPU are still consumed, so the claim is the narrower, verifiable one
+that no dedicated application runtime is provisioned.
+\textbf{Privacy.} No personal data collected, stored or transmitted; no cookies,
+no analytics, no real firm data---every quantity is simulated.
+\textbf{Accessibility.} Colour contrast was computed for every
+foreground/background pair in the Space's stylesheet and meets WCAG~AA
+throughout (lowest pair 7.2:1 against a 4.5:1 minimum); result updates are
+announced through an \texttt{aria-live} region; every interactive control has a
+visible keyboard focus ring; the page reflows at 200\% zoom without horizontal
+scrolling.
+\textbf{What remains unverified.} The behavioural cost distribution has not been
+elicited from human subjects; the discretised grid has not been shown to
+preserve the equilibrium of a continuous game; the revisable evaluator has not
+been tested against deliberate false-history construction; best responses are
+computed against a posted rule rather than as a full equilibrium fixed point;
+and no output should be read as a valuation of, or evidence about, any real firm.
 
 \clearpage
-\section*{Appendix B --- AI-Assistance Statement}
-I used AI assistance for locating candidate anchor papers and open-source tools, structuring the proposal, and implementing/documenting the classroom artifact. The choice of research question, the Inherit/Advance/Tension framing, the hypotheses, the research design, the responsible-boundary analysis, and the interpretation of the deployed test cases remain my responsibility. AI output is not treated as a source; underlying claims are tied to the references above.
+\section{Cumulative intellectual development}
+This proposal develops my Intellectual Statement~II through the \emph{2056 Nobel
+and Turing Laureate Program Launch Workshop}, held on September~7, 2026 at Duke
+Kunshan University, IB~2050. Program Chair: Prof.\ Luyao Zhang. Program
+Discussant: Prof.\ Ken Rogerson. My session: \WorkshopSession. My role: author
+and artifact developer. My teammates: Yitong Lin and Yichen Shen.
 
-The workflow was: human topic selection; AI-assisted comparison and drafting; implementation of the two-period browser prototype; manual checking of prices, payoffs, and residuals against the run log; revision of claims so that H1--H3 remain explicitly untested; and documentation of limitations and reproducibility conditions.
-
-\section*{Appendix C --- Course-Scale Reproducibility Checklist}
 \begin{enumerate}
-\item Fix the game tree and seed before comparing evaluators.
-\item Hold firm actions and realised noise fixed when swapping static and memory evaluators.
-\item Report manipulation, mispricing, firm payoff, and welfare separately.
-\item Sweep manipulation-cost heterogeneity and outcome noise.
-\item Report grid sensitivity between the coarse browser implementation and the research grid.
-\item Include allocation outcomes by firm size/type to detect disparate impact.
-\item Distinguish demonstration outputs from equilibrium evidence.
+\item \textbf{Week~II $\to$ Monday, September~7.}
+\emph{Earlier claim:} my contribution was ``a better evaluator'' that resists
+manipulation.
+\emph{Source:} Prof.\ Zhang's Week~2 handout---``explore when memory-based
+evaluation can remain credible if the evaluator itself can change the rules,''
+with the Banchio et al.\ announced-versus-followed distinction.
+\emph{Revision:} the claim narrowed to \emph{when memory substitutes for
+commitment}, and the two conditions were renamed \textsc{committed} and
+\textsc{revisable} so the comparison is about rule credibility rather than about
+two scoring formulas (Section~2, Figure~\ref{fig:teaser}).
+\emph{Consequence:} the proposal now inherits a named open problem instead of
+asserting a novel one. The same note proposed Tian~Liang (economics) and
+Xuantong~Fu (behavioural science) as collaborators; the elicitation design in
+Section~4 and the ``Next study'' row of Table~\ref{tab:roadmap} are written as
+the two halves that collaboration would split.
+
+\item \textbf{Monday $\to$ Wednesday, September~9.}
+\emph{Earlier claim:} the deployed Space's four logged runs demonstrated H3.
+\emph{Source:} the Wednesday predict $\to$ run $\to$ change one assumption
+$\to$ check $\to$ interpret sequence, applied to my own log.
+\emph{Revision:} I recorded that $\epsilon$ drew $0.00$ in all six priced rounds
+and labelled the noise channel untested (v1 Section~4).
+\emph{Consequence:} the weakness that both reviewers later identified was
+already in the submitted text, which is why the v2 response is a measurement
+rather than a concession.
+
+\item \textbf{v1 $\to$ Monday, September~14 class review.}
+\emph{Earlier claim:} ``a memory-based evaluator can sustain more honest
+disclosure than a static evaluator'' (H3), demonstrated on one seed.
+\emph{Source:} Aaron Wang---\emph{can memory sometimes incorrectly punish an
+honest firm? test under different levels of outcome noise}; Zhenning Wang---test
+seeds and memory strength before drawing a conclusion.
+\emph{Revision:} 20{,}000 draws per cell across $\sigma\in[0,3]$ and
+$\lambda\in[0,2]$; the false-punishment threshold $\sigma^{*}=\bar m$
+(Section~4); and H3 restated on deviation gain after the grid comparison
+reversed the accuracy result (Section~3, bullet~3).
+\emph{Consequence:} H3 is now a bounded claim with a named failure region rather
+than a direction of travel, and one of my own defaults ($\lambda=1$) was shown
+to be wrong.
 \end{enumerate}
+
+\noindent\textbf{The 2056 statement, before and after.}
+\emph{Intellectual Statement~II:} ``an auditable design protocol for
+gaming-resistant valuation---a method for externally testing a proprietary
+scoring model without requiring disclosure of its weights.''
+\emph{Now (Section~5):} the same ambition, but anchored to a Turing Award
+lineage that makes ``testing without disclosure'' a formal object
+(interactive and zero-knowledge proofs~\cite{goldwasser1989,turing2012}) rather
+than an aspiration, and to a first result---$\sigma^{*}=\bar m$---that a
+protocol would actually have to report.
+
+\section{Field and open-source inspiration}
+The \emph{Joint Interdisciplinary Field Trip---Technology, Computation, Culture
+\& Society in Action} took place on September~4, 2026. I attended both sites in
+person and photographed both exhibits myself.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.86\columnwidth]{photos/p1.jpg}
+\caption{Tencent Shanghai Office, September~4, 2026. Photograph by the author.
+Screen capture of a custom ``campus route'' skill I built inside Tencent's
+WorkBuddy from a plain-language prompt, with no code, in minutes.
+\emph{Observation:} the tool worked on the first attempt and required no
+engineering support. \emph{Interpretation:} the marginal cost of \emph{producing}
+a metric is near zero for whoever owns the platform---which is exactly the
+asymmetry this proposal prices, and the reason $k$ is a private type rather than
+a constant.}
+\Description{Screenshot of a custom AI skill built inside a corporate workplace
+assistant, mapping campus walking routes from a plain-language prompt.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.86\columnwidth]{photos/p2.jpg}
+\caption{Shanghai Science and Technology Museum, September~4, 2026. Photograph
+by the author. The public energy data wall. \emph{Observation:} the headline
+panel posts energy per 10{,}000 yuan of output at $-8.17\%$, total consumption
+at $+2.12\%$ and output at $+5.95\%$, with no method note.
+\emph{Interpretation:} those three figures imply an intensity fall near $3.6\%$,
+not $8.17\%$, and nothing on the wall reconciles them. A number nobody can
+re-derive cannot discipline anyone---which is why this proposal's contribution
+is a protocol someone else can rerun, not only a model I would write.}
+\Description{Photograph of a museum data wall showing total energy consumption,
+energy per unit of GDP, a sector breakdown and building energy intensity.}
+\end{figure}
+
+\noindent\textbf{Two student-discovered open-source tools} (not instructor
+examples; Hy4-preview and UNDP GeoHub excluded).
+
+\noindent\emph{Industry---OpenSpiel} (Google DeepMind). Apache~2.0; tag
+\texttt{v2.0.2} (12 Aug 2026), commit \texttt{d7c4fc2}; accessed 5 Sep 2026.
+\emph{Capability:} encodes $n$-player, general-sum, imperfect-information
+extensive-form games as one formal object and solves them with CFR or learning
+agents---the game is written once, the solver swapped.
+\emph{Limitation:} needs a finite discrete tree, so $\theta$ and $m$ must be
+discretised; the strongest solvers target two-player zero-sum while mine is
+general-sum; it is C++/Python and cannot run in a browser.
+\emph{Design consequence:} it is the planned route to the CFR fixed point in
+Table~\ref{tab:roadmap}, and its browser limit is precisely why the deployed
+Space is a teaching artifact while the Colab notebook carries the evidence.
+
+\noindent\emph{Public sector---Dioptra}~\cite{dioptra} (U.S. NIST). NIST-authored portions not
+under U.S. copyright (17 U.S.C. \S\,105), otherwise CC BY 4.0; latest stable tag
+\texttt{1.1.0} (19 Feb 2026), commit \texttt{d28451c}; accessed 5 Sep 2026.
+\emph{Capability:} runs reproducible, provenance-tracked experiments that
+quantify degradation under a declared attack and recovery under a declared
+defence---the NIST AI RMF~\cite{nist2023} ``Measure'' function, operationalised.
+\emph{Limitation:} its threat model is input perturbation with no attacker cost
+or payoff, so it measures robustness rather than equilibrium and cannot say
+whether a rational firm would \emph{pay} to game a rule; it also needs a server.
+\emph{Design consequence:} that missing cost layer names my gap rather than a
+certification capability, and it is why Section~3 reports deviation gain as a
+first-class metric.
+
+\noindent\textbf{Two-sector value.} Privately, the protocol becomes a
+pre-deployment test of whether a scoring rule rewards genuine quality or
+strategically cheap reporting. Publicly, it becomes a traceable measurement
+record an external evaluator can rerun without the model's weights.
+
+\clearpage
+\section{Review response and revision record}
+\emph{Reviews were received in the September~14 class review. Reviewer names are
+to be inserted; the quoted text is transcribed from the handwritten review
+sheets.}
+
+\subsection{Reviewer 1 --- Aaron Wang}
+\textbf{Appreciated.} ``The research question and three hypotheses are very
+clear.'' \emph{Retained} --- Sections~1--2 keep the question and H1--H3 verbatim,
+with the evidence status now printed on Figure~\ref{fig:teaser} itself.
+
+\textbf{Constructive concern.} ``The effect of noise should be tested more
+carefully$\ldots$ Test the model under different levels of outcome noise.''
+\emph{Addressed, Section~3 and Figure~\ref{fig:noise}.} $\sigma$ swept over
+$\{0,0.25,\ldots,3.0\}$ with 20{,}000 draws per cell. Result: deviation gain is
+flat in $\sigma$ (the deterrence result survives), while accuracy under the
+revisable rule degrades monotonically. \emph{Verification:}
+\texttt{companion/results/sweep\_noise.csv}, regenerated by
+\texttt{python companion/src/run\_experiments.py}.
+
+\textbf{Question.} ``Can memory sometimes incorrectly punish an honest firm?''
+\emph{Answered, Section~4.} Yes---an honest firm is priced below value in
+$49.9\%$ of draws for any $\sigma>0$---but the comparison that matters has a
+threshold: it is worse than commitment only when $\sigma>\bar m$, with share
+$(\sigma-\bar m)/\sigma$, and worse on average only when $\sigma>2\bar m$. The
+analytic derivation and the simulation agree to three decimals
+(\texttt{companion/results/false\_punishment.csv}). Aaron Wang's question produced the
+sharpest single result in the paper, and it is the quantity Section~5 now
+identifies as what a regulator would need.
+
+\subsection{Reviewer 2 --- Zhenning Wang}
+\textbf{Appreciated.} ``Sharp strategic problem''; ``productively combines
+signaling economics, BS, CS methods''; ``strong international relevance.''
+\emph{Retained} --- the three-layer structure is unchanged, though each layer is
+now stated as a question in Section~1 to match the template.
+
+\textbf{Constructive concern.} ``Can test more $\ldots$ and memory strength
+before drawing conclusion.'' \emph{Addressed, Section~4 and
+Figure~\ref{fig:lambda}.} $\lambda$ swept over $\{0,0.25,\ldots,2.0\}$ at two
+noise levels. This changed a conclusion of mine rather than confirming one:
+deterrence saturates by $\lambda=0.5$ while accuracy is best at $\lambda=0.25$,
+so the $\lambda=1$ my v1 demo hard-coded is on the wrong side of both. I have
+said so in the main text rather than quietly switching the default.
+I also replaced v1's single seed: \texttt{companion/results/seed\_audit.csv} shows the
+all-zero-noise draw v1 relied on occurs for $12.8\%$ of seeds.
+
+\textbf{Concern, partly deferred.} ``Can be stronger with validation across
+markets and institutional settings.'' \emph{Deferred with reason.} Cross-market
+validation needs institutional variation (audit regimes, disclosure rules) that
+a two-period simulated game cannot represent, and firm-level manipulation-cost
+data that is not public. It is entered as the ``Longer term'' row of
+Table~\ref{tab:roadmap} rather than claimed here. What I could do within PS1 is
+the closest available analogue---varying the announced allowance $\bar m$ and
+the noise $\sigma$, which together are the institutional parameters that move
+the false-punishment threshold---and that is reported in Section~4.
+
+\subsection{Changes not requested by either reviewer}
+Restructured to the template's five sections; added the Nobel and Turing
+foundations, Table~\ref{tab:roadmap} and the 2056 statement; added the GitHub
+repository and Colab notebook, which v1 explicitly lacked; added the SDG~4
+learning pathway alongside the existing Target~9.3 mechanism; moved the AI-use
+disclosure to A.1 and the field evidence to Appendix~C, per the template's
+appendix scheme.
+
+\subsection{Retained against possible objection}
+The best responses in Section~3 are computed against a posted rule, not as a
+full equilibrium fixed point. I have retained this for PS1 because the CFR
+computation that would replace it is the Table~\ref{tab:roadmap} ``Next study''
+milestone, and because stating the limitation (Section~2, A.6) is more useful
+than a fixed point I could not verify at course scale.
+
+\clearpage
+\section{Structured abstract and cumulative proposal map}
+\begin{table*}[t]
+\small
+\caption{Appendix~E structured abstract, updated for v2. Row~8 records feedback
+and revision; the prior version is preserved in Appendix~B.}
+\begin{tabularx}{\textwidth}{@{}p{26mm}Y@{}}
+\toprule
+\textbf{Element} & \textbf{Current statement} \\
+\midrule
+Background & Algorithmic scoring makes reported metrics consequential for
+capital allocation, so the metric becomes a target~\cite{strathern1997,
+perdomo2020}. The 2001 Prize foundation~\cite{nobel2001,spence1973} explains
+credibility through signalling cost but assumes a receiver whose rule is fixed.
+An AI evaluator can retrain, so the announced rule and the followed rule come
+apart~\cite{banchio2025}. \\
+Motivation and application & Startup fundraising and private-fund reporting.
+Firms and funds are scored; investors allocate from the posted price; an auditor
+sees behaviour but not weights. A gameable model routes capital toward whoever
+can afford strategic reporting, which is unevenly distributed by firm size. \\
+Three connected questions & \textbf{ECON:} does opponent-specific memory
+discipline disclosure the way commitment does, and at what welfare cost?
+\textbf{CS:} can such a rule be made comparable and auditable without the
+weights? \textbf{BS:} is the manipulation cost real or an artefact of assuming
+convexity? \textbf{Integrated:} under what conditions can an evaluator that
+remembers substitute for one that commits---and when does remembering punish the
+honest? \\
+Method and model assumptions & Two-period signalling game; firm privately knows
+$(\theta,k)$, picks $(a,m)$, reports $s=\theta+a+m$; outcome $y=v+\epsilon$
+realised after pricing. \textsc{Committed} rule $p=\max(0,s-\bar m)$ versus
+\textsc{revisable} $p=\max(0,s-\bar m-\lambda g_1)$. Perfect Bayesian
+equilibrium~\cite{harsanyi1968} as the target concept; type-by-type best
+responses against a posted rule at course scale. Baseline, metric and check in
+Section~3. \\
+Results or expected results & \emph{Obtained (simulated, own model):} deviation
+gain halves, $0.692\to0.346$; deterrence stops in the terminal round; honest
+firms are mis-priced worse than under commitment once $\sigma>\bar m$; the
+coarse browser grid reports a two-thirds honest share that a finer grid reduces
+to zero. \emph{Expected:} a CFR
+fixed point and horizons $>2$. \emph{What would challenge the claim:} flat
+elicited costs, or $\lambda$-saturation that vanishes on a finer grid. \\
+Intellectual merits & Behaviour alone gives a cost distribution with no
+counterparty; economics alone an equilibrium whose key parameter is invented;
+computation alone a robust classifier with no account of whether the
+manipulation was rational~\cite{osullivan2025}. Integrated, the claim becomes
+statable and bounded: memory substitutes for commitment on deterrence, in
+non-terminal rounds, below a named noise threshold. \\
+Practical impacts & Private: a pre-deployment test of whether a scoring rule
+rewards quality or cheap reporting. Public: a rerunnable measurement record
+aligned with the NIST AI RMF ``Measure'' function~\cite{nist2023}, extended with
+the attacker-cost layer Dioptra does not supply. SDG~4~\cite{un_sdg4} through
+the open browser game; SDG Target~9.3~\cite{un2025} through the simulated
+allocation gap by firm size. Benefits intended, not demonstrated. \\
+Feedback received and revision made & I previously claimed that a memory
+evaluator sustains more honest disclosure than a static one, demonstrated on one
+seed. Aaron Wang (Sept~14) asked whether memory can incorrectly punish an honest
+firm and asked for a noise sweep; Zhenning Wang asked for more seeds and memory
+strengths. I swept $\sigma$ and $\lambda$ at 20{,}000 draws per cell
+(Sections~3--4), derived the threshold $\sigma^{*}=\bar m$, and restated H3 on
+deviation gain and welfare after finding that the binary honest share is an
+artefact of the coarse action grid. Next I will elicit manipulation costs and compute a CFR fixed point
+on the same tree. \\
+\bottomrule
+\end{tabularx}
+\end{table*}

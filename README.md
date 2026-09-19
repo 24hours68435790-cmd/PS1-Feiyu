@@ -1,60 +1,150 @@
-# COMSCI/ECON 206 PS1 Overleaf template
+# PS1 — When the Model Becomes the Target
+### Strategic Disclosure under AI-Assisted Valuation
 
-Individual research proposal · Computational Microeconomics · Autumn 2026 Session 1 · Instructor Prof. Luyao Zhang
+**Feiyu Li** (`fl140`) · COMSCI/ECON 206 *Computational Microeconomics*
+Duke Kunshan University · Autumn 2026 Session 1 · Workshop **Session G (Team 7)**
+Instructor: Prof. Luyao Zhang
 
-Fork this repository, import your fork into Overleaf, and develop Intellectual Statement II into your own research proposal. The starter includes all current PS1 revisions and a compiled preview.
+Forked from [`dku-comsci-econ206-Autumn2026/ps1-overleaf-template`](https://github.com/dku-comsci-econ206-Autumn2026/ps1-overleaf-template).
+The course template's LaTeX class, bibliography style, `instructions/` and
+`scaffolding/` are retained unchanged; `main.tex`, `sections/`, `appendices/`,
+`figures/` and `companion/` are my own work.
 
-## Start in your own account
+| Artifact | Link |
+|---|---|
+| Colab notebook | *(fill in after first push — see `companion/notebooks/`)* |
+| Browser game (Hugging Face Static Space) | https://huggingface.co/spaces/24hours6964/strategic-disclosure-game |
 
-1. **Fork** this repo to your own personal account. Create the fork under your own GitHub account.
-2. If you have Overleaf GitHub synchronization, link your GitHub account in Overleaf Account Settings. From the Overleaf dashboard choose **New project → GitHub repo**, select **your fork**, then **Import to Overleaf**.
-3. Otherwise, in your fork choose **Code → Download ZIP**. In Overleaf choose **New project → Upload Project** and upload that ZIP. This route does not require GitHub synchronization.
-4. Set the main document to `main.tex`, compiler to **pdfLaTeX**, and use the current available TeX Live environment. Recompile; a bibliography refresh may need another pass.
-5. Replace your name, email and course/workshop fields in `main.tex`. Write your proposal in `sections/proposal.tex`; complete Author Notes and Appendices A–E in `appendices/supporting.tex`.
-6. Keep your own GitHub fork and Overleaf source consistent. GitHub synchronization requires an explicit push or pull; it is not automatic. For a ZIP import, copy final source changes back to your fork manually.
-7. Submit the PDF and source ZIP on Canvas, with your code snapshot and artifact links. The template repository is not the Canvas submission channel.
+---
 
-GitHub synchronization is an Overleaf premium feature, including access supplied through eligible institutional or group plans. Official instructions: [Overleaf GitHub synchronization](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/github-synchronization). The ZIP route is a separate usable starting path.
+## The question
 
-## Main paper and supporting material
+> When firms know the metrics an AI valuation model uses, under what conditions
+> can an evaluator that **remembers** a particular firm substitute for one that
+> **commits** to a fixed rule — and when does remembering instead punish the honest?
 
-Keep five numbered sections within two main pages: three connected questions; economic answer; computational answer; behavioral answer; advanced development and future directions. Include the title, metadata, teaser, captions and contribution statements in that limit. References, Author Notes and appendices are unlimited supporting pages.
+Following Prof. Zhang's Week 2 note to *"compare fixed and revisable evaluator
+rules in the same game; record deviation gains as well as disclosure accuracy"* —
+and the announced-rule-versus-followed-rule distinction Banchio, Skrzypacz and
+Yang draw for auctions — two evaluators are compared on one two-period
+disclosure tree:
 
-- `main.tex`: identity, title, class metadata, teaser and source includes.
-- `sections/proposal.tex`: five sections, the Expected 2056 Nobel Prize and Turing Award contribution statement, Open Science Statement, and Statement of Contribution to the UN's SDGs.
-- `appendices/supporting.tex`: acknowledgements, individual contribution, references, technical/AI disclosure, cumulative development, dated field record, review response and Appendix E abstract table.
-- `figures/ps1_teaser.drawio`: native editable example from the class LLM proposal. All labels, icons and connectors are editable. Replace or adapt it to your research.
-- `figures/ps1_teaser.pdf` and `.svg`: vector exports. Keep the caption, `\Description` and main-text references aligned with your edited figure.
-- `preview.pdf`: compiled starter, two main pages plus supporting pages. Compile `main.tex` after editing; this preview is not automatically updated by Overleaf.
-- `instructions/`: assignment, concise review/grading guide, simple form and submission roadmap.
-- `scaffolding/`: optional prompts and the Appendix E table source.
+- **COMMITTED** — the announced allowance `m̄` is the one followed, always.
+  `p = max(0, s − m̄)`
+- **REVISABLE** — `m̄` is still *announced*, but after round 1 the evaluator
+  *follows* `m̄ + λ·g₁`, where `g₁ = (s₁ − y₁) − m̄` is the inflation it can infer.
 
-## Required attribution and intellectual development
+Identical draws, identical firm actions, identical tree. Only the rule differs.
 
-Record the **2056 Nobel and Turing Laureate Program Launch Workshop**, September 7, 2026, Duke Kunshan University, IB 2050. Program Chair: **Prof. Luyao Zhang**. Program Discussant: **Prof. Ken Rogerson**. Identify your assigned session, role and two actual teammates, and acknowledge the rest of the class. Explain real changes prompted by feedback.
+## Reproduce everything
 
-For the September 4, 2026 field trip, use the exact visited site names **Tencent Shanghai Office** and **Shanghai Science and Technology Museum** and retain the earlier industry/public-sector photographs with dates and provenance. Describe actual attendance and observations accurately.
+```bash
+cd companion
+pip install -r requirements.txt
+python src/run_experiments.py           # ~4 s, writes results/*.csv and both figures
+python -m unittest discover -s tests    # 15 tests, each one a claim the paper makes
+```
 
-Appendix E retains the eight-row cumulative proposal map. The main roadmap connects cited laureate foundations, an enduring human question, today's distinctive environment and technology, and new economics/computer-science/behavioral-science contributions. The 2056 statement is an aspiration supported by milestones, not a prediction of an award.
+Deterministic: fixed seeds, no wall-clock, no network, no hidden state.
 
-## Optional computational pilot
+The run **asserts before it reports**. `verify_space_replication()` re-implements
+JavaScript's `mulberry32` PRNG in Python and must reproduce the four cases logged
+from the deployed browser page — same draw (θ=2, k=0.5), same ε sequence, same
+prices to the cent — or the script fails. A silent disagreement between the game
+and the notebook is not possible.
 
-[Open the synthetic classroom pilot in Google Colab](https://colab.research.google.com/github/sunshineluyao/ps1-overleaf-template/blob/main/companion/notebooks/06_ps1_strategic_reasoning_demo.ipynb). It is self-contained; no LLM API key is needed. The notebook's setup cell installs the documented scientific packages. It demonstrates one coordination game and a pedagogical logit cognitive hierarchy.
+## Layout
 
-The in-class sample homework reconstructs Jia et al. (NeurIPS 2025), *LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory*, prospectively: 22 LLMs, 13 settings, 30 baseline trials. This optional pilot is a much smaller synthetic illustration, not that experiment. Its precision rule is gamma**k; the paper's TQRE specification is gamma*k. Do not relabel its synthetic outputs as empirical LLM findings.
+```
+main.tex                        the proposal (five sections, two pages)
+sections/proposal.tex           §1–§5 + Open Science and SDG statements
+appendices/supporting.tex       Author Notes, references, Appendices A–E
+figures/ps1_teaser_body.tex     Figure 1, inline TikZ (no stale PDF to forget)
+figures/fig_noise.pdf           Figure 2, generated by run_experiments.py
+figures/fig_lambda.pdf          Figure 3, generated by run_experiments.py
+photos/                         Sept 4 field trip, Appendix C
 
-For local use, enter `companion/`, install `requirements.txt`, and run `python -m unittest discover -s tests`. Open `companion/hf_space/index.html` with `model.js` beside it to try the game, or upload the Space folder to Hugging Face. No hosted Space URL is claimed here.
+companion/src/strategic_disclosure.py   the model + Python twin of the Space
+companion/src/run_experiments.py        every number quoted in §3–§4
+companion/src/build_notebook.py         regenerates the notebook from a cell list
+companion/notebooks/                    the Colab notebook
+companion/results/                      7 CSVs + 4 figures
+companion/tests/test_model.py           15 unit tests
+companion/hf_space/index.html           source of the deployed Static Space
 
-Put **your project GitHub and Colab URLs** in the Open Science Statement. Put **your Hugging Face URL** in the Statement of Contribution to the UN's SDGs and explain a specific SDG 4 Quality Education learning use. Distinguish released materials from benefits awaiting evaluation.
+instructions/  scaffolding/  acmart.cls  references.bib   ← course template, untouched
+```
 
-## Submission and review
+## Results
 
-First draft: Sunday **September 13, 2026, 11:00 P.M. Beijing time UTC+8**. Peer review: Monday September 14 in class. Proposed later deadlines: response September 16; reviewer follow-up September 17; v2 September 20, each at 11:00 P.M. Beijing time.
+All simulated outputs of this model. **Not** evidence about human behaviour, any
+real AI system, or any real firm.
 
-Reviewers answer only three prompts: what do you appreciate; what do you criticize constructively; what questions could improve scientific communication? The optional scaffolding is separate. The instructor grades the full process: 60 research + 15 review + 10 response + 15 revision. A complete, sound, rerunnable portfolio reaching the **Stellar Scholarship Threshold** of 70/100 research quality earns all 60 research points; the other 40 require process contributions.
+| | committed | revisable | grid |
+|---|---|---|---|
+| **deviation gain** | 0.333 | **0.167** | browser |
+| **deviation gain** | 0.692 | **0.346** | research |
+| mean \|p−v\| | **0.667** | 0.750 | browser |
+| mean \|p−v\| | **0.571** | 0.869 | research |
+| welfare | 5.667 | **5.833** | browser |
+| welfare | 5.263 | **5.632** | research |
+| honest share | 0.667 | 0.667 | browser |
+| honest share | 0.000 | 0.000 | research |
 
-Initial reasoning, handwritten reflection and peer reviews are Human-Only. AI-Assisted drafting and debugging follow independent reasoning and require disclosure and human verification.
+1. **The revisable rule halves the gain from inflating** — exactly 2.00× on both
+   grids, at every noise level in σ ∈ [0, 3]. This is the margin H3 survives on.
+2. **That deterrence stops at the horizon.** The cheap type (k = 0.5) sets m₁ = 0
+   under the revisable rule but still m₂ = 1: memory disciplines every round that
+   has a *successor*, and no more.
+3. **Memory does mis-punish honest firms, with a threshold.** An honest firm is
+   priced below value in 49.9% of draws for any σ > 0, but worse than under
+   commitment only once σ > m̄, with share (σ − m̄)/σ. Simulation returns 0.198,
+   0.331, 0.500, 0.668 at σ = 1.25, 1.5, 2.0, 3.0 against an analytic 0.200,
+   0.333, 0.500, 0.667.
+4. **Deterrence saturates at λ ≈ 0.5** while accuracy is best at λ ≈ 0.25 — so
+   the λ = 1 hard-coded in the v1 demo is optimal for neither.
+5. **The binary "honest share" is a grid artefact** (0.667 coarse, 0.000 fine,
+   under both rules), which is why H3 is stated on deviation gain and welfare.
 
-## Attribution and reuse
+## Try the threshold yourself
 
-Students may fork and adapt the course starter for this assignment, acknowledging sources and preserving third-party terms. The genuine ACM class and bibliography style files retain their original notices; see `acmart.dtx`, `acmart.ins`, `acmart.cls` and `ACM-Reference-Format.bst`. No claim is made that all cited papers or third-party assets are covered by a new blanket license. State actual reuse terms for your own research artifacts.
+The browser game exposes the same two knobs the sweep varies. **Seed 2, σ = 2,
+play `a = 1, m = 0` twice.** You inflate nothing and the revisable rule still
+prices you at 2.00 against a true value of 4.00, where the committed rule says
+3.00 — the page flags the round. The controls are strictly additive: at their
+defaults (σ = 0.5, λ = 1) every price is bit-identical to the Week 2 version.
+
+One honest caveat: the page draws ε from three points {−σ, 0, +σ} while the
+notebook draws ε ~ U(−σ, σ), so the *frequency* of mis-punishment differs (2/3
+versus 1/2 at σ = 2) even though the threshold σ* = m̄ does not. Quote the
+notebook's number, not the page's.
+
+## Not done, and not claimed
+
+- No equilibrium fixed point — best responses are computed against a *posted*
+  rule, not solved as a perfect Bayesian equilibrium. The CFR computation in
+  OpenSpiel is the "Next study" milestone in Table 1.
+- No behavioural evidence. The convex manipulation cost is inherited from
+  Fischbacher & Föllmi-Heusi as motivation, never estimated.
+- No horizon beyond two rounds, so memory and last-period unravelling are not
+  separated.
+
+## Credits
+
+The browser Space began as joint work with **Yitong Lin** and **Yichen Shen** in
+the Week 2 workshop. The σ/λ controls, the honest-firm mis-punishment flag and
+the committed/revisable renaming are my individual PS1 additions to that base.
+The Python model, the sweeps, the notebook and the paper are mine.
+
+I thank Prof. Luyao Zhang for the Week 2 note that produced §2–§3, Prof. Ken
+Rogerson as Program Discussant, and my PS1 reviewers **Aaron Wang** and
+**Zhenning Wang**, whose questions produced §4 in its current form.
+
+AI assistance is disclosed in Appendix A.1 of the paper. Initial reasoning, the
+research design and H1–H3 are Human-Only.
+
+## Licence
+
+My contributions: MIT (see `LICENSE`). The course template files retain their
+original notices; `acmart.cls` and `ACM-Reference-Format.bst` keep the ACM
+licence they ship with.

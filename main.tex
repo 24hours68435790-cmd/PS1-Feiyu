@@ -3,42 +3,90 @@
 \setcopyright{none}
 \renewcommand\footnotetextcopyrightpermission[1]{}
 \usepackage{amsmath,tabularx,array,enumitem,balance}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \definecolor{CourseBlue}{HTML}{315EFB}
 \definecolor{CourseTeal}{HTML}{14877D}
 \hypersetup{colorlinks=true,linkcolor=CourseBlue,citecolor=CourseTeal,urlcolor=CourseTeal}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\setlist{leftmargin=*,topsep=3pt,itemsep=2pt}
+\setlist{leftmargin=*,topsep=2pt,itemsep=1pt}
+
+%% Week 2 agenda maps the seven parallel sessions one-to-one onto the seven
+%% teams (Session A = Team 1 ... Session G = Team 7).  Team 7 -> Session G.
+\newcommand{\WorkshopSession}{Session G (Team 7)}
+
 \newcommand{\CourseNumber}{COMSCI/ECON 206}
 \newcommand{\CourseName}{Computational Microeconomics}
 \newcommand{\CourseSession}{Autumn 2026 Session 1}
 \newcommand{\Instructor}{Luyao Zhang}
-\newcommand{\WorkshopSession}{[Your assigned workshop session]}
-% Replace these with YOUR fork/project URLs, not the instructor's template.
-\newcommand{\GitHubLink}{[Your project GitHub URL]}
-\newcommand{\TemplateRepository}{\url{https://github.com/sunshineluyao/ps1-overleaf-template}}
-\newcommand{\ColabLink}{[Insert verified Colab URL]}
-\newcommand{\DemoLink}{[Insert verified Hugging Face Space URL]}
-\newcommand{\coursemeta}{\noindent\textbf{Submission to:} \CourseNumber{} --- \CourseName.\\
-\textbf{Course session:} \CourseSession. \textbf{Workshop:} \WorkshopSession.\\
-\textbf{Instructor:} \Instructor. \textbf{Assignment:} PS1 research proposal.\par\smallskip}
-\title{[A Specific, Researchable Proposal Title]}
-\author{[Your Full Name]}
+
+%% ---------------------------------------------------------------------------
+%% >>> FILL IN BEFORE SUBMITTING <<<
+%% Replace the two placeholders below with your real URLs, then delete this note.
+%% ---------------------------------------------------------------------------
+\newcommand{\GitHubLink}{https://github.com/FILL-IN-YOUR-USERNAME/PS1-Feiyu}
+\newcommand{\ColabLink}{https://colab.research.google.com/github/FILL-IN-YOUR-USERNAME/PS1-Feiyu/blob/main/companion/notebooks/PS1\_strategic\_disclosure.ipynb}
+\newcommand{\CommitHash}{FILL-IN}
+\newcommand{\DemoLink}{https://huggingface.co/spaces/24hours6964/strategic-disclosure-game}
+
+\newcommand{\coursemeta}{\noindent\footnotesize\textbf{Submission to:} \CourseNumber{} --- \CourseName.
+\textbf{Course session:} \CourseSession. \textbf{Workshop:} \WorkshopSession.
+\textbf{Instructor:} \Instructor. \textbf{Assignment:} PS1 research proposal, v2.
+\textbf{Artifacts:} \url{\GitHubLink} $\cdot$ \url{\ColabLink} $\cdot$ \url{\DemoLink}\par\smallskip}
+
+\title{When the Model Becomes the Target: Strategic Disclosure under AI-Assisted Valuation}
+\author{Feiyu Li}
 \affiliation{\institution{Duke Kunshan University}\city{Kunshan}\country{China}}
-\email{[Your university email]}
-\renewcommand{\shortauthors}{[Your name]}
+\email{feiyu.li@dukekunshan.edu.cn}
+\renewcommand{\shortauthors}{Feiyu Li}
 
 \begin{document}
+
+\begin{abstract}
+When an AI model prices firms on their own reported metrics, the metric becomes
+a target. I ask a narrow question: can an evaluator that \emph{remembers} a
+particular firm substitute for one that \emph{commits} to a fixed rule? Following
+the distinction Banchio et al.\ draw for auctions between an announced rule and
+the rule a designer will follow, I compare a \textsc{committed} evaluator against
+a \textsc{revisable} one on an identical two-period disclosure tree, identical
+draws and identical firm actions, so that only the rule differs. A Python twin of
+the deployed browser Space reproduces its logged prices to the cent, then sweeps
+what a browser cannot. Memory halves the gain from inflating but only in rounds
+that have a successor, and it prices an honest firm below value in half of all
+noisy draws---becoming worse than commitment once outcome noise exceeds the
+announced allowance. All results are simulated outputs of my own model.
+\end{abstract}
+
+\keywords{strategic disclosure, performative prediction, mechanism design,
+credible rules, imperfect-information games, AI valuation, Goodhart's law}
+
 \begin{teaserfigure}
-\captionsetup{skip=8pt}
 \centering
-\includegraphics[width=\textwidth]{figures/ps1_teaser.pdf}
-\caption{Prospective research design adapted from the class proposal. Economic stochastic choice~\cite{rogers2009}, recursive LLM reasoning~\cite{zhang2025}, human reasoning levels~\cite{camerer2004} and persona audits~\cite{gupta2024} motivate a shared evaluation~\cite{jia2025}. Solid arrows within scenes show conceptual relations; dashed arrows show proposed synthesis. Estimated depth and precision are model-dependent, not direct observations of cognition.}
-\Description{Three disciplinary scenes contain a symbolic payoff matrix, successive belief levels, and a comparison of abstract personas. Dashed paths converge on a proposed evaluation of reasoning depth, decision precision and contextual sensitivity. All objects and text are editable in Draw.io.}
+\resizebox{\textwidth}{!}{\input{figures/ps1_teaser_body}}
+\caption{Strategic disclosure under AI-assisted valuation. A firm privately
+knows quality $\theta$ and cost type $k$, chooses productive effort $a$ and
+window-dressing $m$, and reports $s$ to an AI evaluator. Investors allocate
+capital mechanically from the posted price; the payoff net of manipulation cost
+returns to the firm next round. The dashed channels are what make the loop
+strategic: the firm infers the scoring weights, and---under the \textsc{revisable}
+rule only---the evaluator follows a rule updated from this firm's own history,
+so the announced rule and the followed rule come apart~\cite{banchio2025}.
+Section~3 reports what happens when only that box is switched.}
+\Description{A left-to-right diagram with three boxes. The Firm, which privately
+knows quality theta and picks effort and window-dressing, sends a report to the
+AI valuation evaluator, which follows either a committed rule with a fixed
+announced allowance or a revisable rule updated from this firm's history. The
+evaluator posts a price to Investors, who allocate capital mechanically. A rail
+along the bottom returns the firm's payoff, net of effort and manipulation cost,
+to the Firm for the next round. A dashed arc above shows the firm inferring the
+scoring weights. A dashed box below the evaluator supplies the firm's past
+reports and realised outcomes, used only under the revisable rule. Three
+hypotheses with their current evidence status are listed beneath the diagram.}
 \label{fig:teaser}
 \end{teaserfigure}
-\maketitle\raggedbottom\coursemeta
 
-\noindent\textcolor{CourseTeal}{\textbf{Template and illustrative figure.}} Adapt this class-example diagram and replace prompts with your own proposal. Fork the class repository and import your fork into Overleaf; see README for steps. Keep five numbered sections within two main pages, including metadata, Figure 1, its caption, and artifact links. Author Notes, references, and appendices follow on separate pages.
+\maketitle\raggedbottom\coursemeta
 
 \input{sections/proposal}
 \input{appendices/supporting}

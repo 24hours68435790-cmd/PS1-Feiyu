@@ -1,15 +1,504 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategic Reasoning Lab · COMSCI/ECON 206</title><style>
-:root{--ink:#18324a;--blue:#315efb;--teal:#14877d;--line:#dbe3ec;--pale:#f5f7fb}*{box-sizing:border-box}body{margin:0;background:white;color:var(--ink);font:17px/1.5 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:34px 32px 44px}a{color:#174cb1}header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}.eyebrow{font-size:13px;font-weight:750;letter-spacing:.09em;color:var(--teal)}h1{font-size:44px;line-height:1.1;letter-spacing:-.03em;margin:12px 0}h2{font-size:25px;line-height:1.25;margin:0 0 15px}h3{font-size:18px;margin:16px 0 6px}p{margin:8px 0 15px}.lede{max-width:850px;font-size:19px}.grid{display:grid;grid-template-columns:1.05fr 1fr;gap:34px}.panel{padding:24px;border:1px solid var(--line);border-radius:16px}.tag{display:inline-block;padding:4px 10px;background:#edf7f5;color:#08645b;border-radius:5px;font-size:13px;font-weight:650}.matrix{border-collapse:collapse;width:100%;margin:18px 0;font-size:18px}.matrix th,.matrix td{padding:14px 8px;border-bottom:1px solid var(--line);text-align:center}.matrix th{font-size:14px}.matrix td:first-child{font-size:14px;text-align:left;font-weight:650}.matrix .efficient{background:#edf7f5}.matrix .safe{background:var(--pale)}.small{font-size:14px;color:#42576b}.choices{display:flex;gap:10px;margin:16px 0}button{border:1px solid var(--blue);border-radius:8px;background:var(--blue);color:white;padding:12px 18px;font:inherit;font-weight:650;cursor:pointer}button.secondary{background:white;color:var(--blue)}button:focus-visible,input:focus-visible{outline:3px solid #df982b;outline-offset:3px}.result{min-height:102px;padding:16px;background:var(--pale);border-radius:9px}.controls label{display:flex;justify-content:space-between;margin-top:12px;font-weight:620;font-size:15px}.controls input{width:100%;accent-color:var(--blue);margin:11px 0 0}.metric{font-size:36px;font-weight:750;color:var(--blue);margin-top:12px}.bar{height:23px;background:var(--pale);border-radius:5px;overflow:hidden;margin:10px 0}.bar span{display:block;height:100%;background:var(--blue);transition:width .15s}.bench{padding:13px 0;border-top:1px solid var(--line);margin-top:16px}.questions{margin-top:26px;padding:21px 24px;background:var(--pale);border-radius:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.questions b{color:var(--teal)}details{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}summary{cursor:pointer;font-weight:700}footer{font-size:13px;margin-top:22px;color:#42576b}.sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:780px){main{padding:24px 18px}h1{font-size:36px}.grid,.questions{grid-template-columns:1fr}.panel{padding:20px}.choices{flex-wrap:wrap}}
-</style></head><body><main>
-<header><div class="eyebrow">COMSCI / ECON 206 · WEEK 3 · PROF. LUYAO ZHANG</div><h1>Will you coordinate?</h1><p class="lede">A good outcome depends on what someone else chooses. Play a synthetic opponent, then explore how beliefs and bounded reasoning change its behavior.</p><span class="tag">PS1 sample · synthetic classroom model</span></header>
-<div class="grid"><section class="panel"><h2>1. Choose in a coordination game</h2><p>Coordinate together for 8 each. The Safe action protects you if the other player does not coordinate.</p><table class="matrix" aria-label="Game payoffs, your payoff first"><thead><tr><th>You / opponent</th><th>Coordinate</th><th>Safe</th></tr></thead><tbody><tr><td>Coordinate</td><td class="efficient">8, 8</td><td>0, 7</td></tr><tr><td>Safe</td><td>7, 0</td><td class="safe" id="safe-cell">5, 5</td></tr></tbody></table><p class="small">Each cell shows your payoff, then the opponent’s. Choices are simultaneous; the opponent is sampled from the model on the right.</p><div class="choices"><button id="choose-c">Choose Coordinate</button><button id="choose-s" class="secondary">Choose Safe</button></div><div id="play-result" class="result" aria-live="polite">Make a prediction before playing. Which action would you choose, and what do you believe the opponent will do?</div></section>
-<section class="panel"><h2>2. Change the model</h2><div class="controls"><label for="safe">Safe–Safe payoff <output id="safe-val">5.0</output></label><input id="safe" type="range" min="1" max="7" step=".5" value="5"><label for="tau">Mean reasoning level τ <output id="tau-val">1.5</output></label><input id="tau" type="range" min="0" max="5" step=".1" value="1.5"><label for="gamma">Response precision growth γ <output id="gamma-val">1.2</output></label><input id="gamma" type="range" min="1" max="2" step=".05" value="1.2"></div><div class="metric" id="probability">—</div><div class="small">model probability of Coordinate</div><div class="bar" role="img" aria-label="Predicted coordination probability" id="prob-bar"><span id="prob-fill"></span></div><p id="payoff" class="small"></p><div class="bench"><strong>Nash benchmarks</strong><p class="small" id="benchmark"></p><p class="small" id="residual"></p></div></section></div>
-<section class="questions"><div><b>Economics</b><p>How do incentives change the appeal of coordination?</p></div><div><b>Computer science</b><p>Can you reproduce and check the prediction in Colab?</p></div><div><b>Behavioral science</b><p>What evidence could distinguish shallow reasoning from noisy choice?</p></div></section>
-<details><summary>Model, evidence, and research connection</summary><p>This is a simplified truncated logit cognitive hierarchy. Level 0 mixes uniformly; level k responds to a normalized Poisson mixture of lower levels. Precision is γ<sup>k</sup>. We retain levels 0–16 and renormalize. The model is neither a Nash solver nor a quantal-response-equilibrium fixed point.</p><p id="tail" class="small"></p><p>Inspired by <a href="https://papers.nips.cc/paper_files/paper/2025/hash/54b13427fc2c9180f85c3d76cdcf076e-Abstract-Conference.html">Jia et al., NeurIPS 2025</a>, with the baseline matrix from Table 1(b), and <a href="https://doi.org/10.1162/0033553041502225">Camerer, Ho &amp; Chong (2004)</a>. This original teaching adaptation does not reproduce the paper’s LLM evaluation. No real LLM calls or human research data are used.</p><p>Your proposal should state a hypothesis, compare alternative explanations, and distinguish expected findings from synthetic diagnostics. Use notebook 06 in the companion repository to inspect every calculation.</p></details>
-<footer>Runs locally in your browser. Choices stay in this page and disappear on refresh. No account, API key, or data collection. Course prototype; hosting is prepared separately.</footer>
-</main><script src="model.js"></script><script>
-const $=id=>document.getElementById(id);let current;let state=206;
-function redraw(){let safe=+$('safe').value,tau=+$('tau').value,gamma=+$('gamma').value;current=coordinationModel(tau,gamma,safe);$('safe-val').textContent=safe.toFixed(1);$('tau-val').textContent=tau.toFixed(1);$('gamma-val').textContent=gamma.toFixed(2);$('safe-cell').textContent=`${safe}, ${safe}`;let percent=(100*current.p).toFixed(1);$('probability').textContent=percent+'%';$('prob-fill').style.width=percent+'%';$('prob-bar').setAttribute('aria-label',`Predicted probability of Coordinate ${percent} percent`);$('payoff').textContent=`Expected payoff against this model: Coordinate ${current.uC.toFixed(2)}; Safe ${current.uS.toFixed(2)}.`;$('benchmark').textContent=`Both Coordinate and both Safe are pure equilibria. In the interior mixed equilibrium, each coordinates with probability ${(100*current.mixed).toFixed(1)}%.`;$('residual').textContent=`If both use the model distribution, the largest unilateral gain is ${current.regret.toFixed(3)} payoff units. A nonzero gain is allowed by this bounded-reasoning model.`;$('tail').textContent=`Omitted Poisson probability before normalization: ${current.tail.toExponential(2)}. This numerical approximation is distinct from behavioral validity.`;}
-function play(choice){state=(1664525*state+1013904223)>>>0;let opponent=(state/4294967296)<current.p?'Coordinate':'Safe';let safe=+$('safe').value;let payoff=choice==='Coordinate'?(opponent==='Coordinate'?8:0):(opponent==='Coordinate'?7:safe);$('play-result').textContent=`You chose ${choice}. The synthetic opponent chose ${opponent}. Your payoff: ${payoff}. One round does not establish a behavioral pattern; compare predictions across model settings.`;}
-for(let id of ['safe','tau','gamma'])$(id).addEventListener('input',redraw);$('choose-c').addEventListener('click',()=>play('Coordinate'));$('choose-s').addEventListener('click',()=>play('Safe'));redraw();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategic Disclosure under AI-Assisted Valuation — a two-period teaching game</title>
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f4f6f9; --ink:#16181d; --muted:#464d5c;
+    --line:#c3c9d4; --accent:#0f4c81; --accent-ink:#ffffff;
+    --warn:#8a3b00; --warnbg:#fff4e8; --ok:#14532d; --okbg:#e9f6ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:1.25rem; background:var(--bg); color:var(--ink);
+    font:16px/1.55 Georgia,"Times New Roman",serif; max-width:60rem; margin-inline:auto;
+  }
+  h1{font-size:1.45rem; line-height:1.25; margin:0 0 .35rem}
+  h2{font-size:1.05rem; margin:1.5rem 0 .5rem; border-bottom:2px solid var(--line); padding-bottom:.25rem}
+  h3{font-size:.95rem; margin:1rem 0 .35rem}
+  p,li{margin:.45rem 0}
+  .sub{color:var(--muted); font-size:.9rem; margin:0 0 1rem}
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:.85rem 1rem; margin:.75rem 0}
+  .grid{display:flex; flex-wrap:wrap; gap:1.25rem}
+  .grid>div{flex:1 1 15rem; min-width:14rem}
+  fieldset{border:1px solid var(--line); border-radius:6px; margin:.6rem 0; padding:.6rem .85rem}
+  legend{font-weight:bold; font-size:.9rem; padding:0 .35rem}
+  label{display:inline-block; margin:.15rem .9rem .15rem 0; cursor:pointer}
+  input[type=radio],input[type=number],input[type=text]{margin-right:.3rem}
+  input[type=number],input[type=text]{
+    font:inherit; padding:.25rem .4rem; border:1px solid var(--line);
+    border-radius:4px; background:#fff; color:var(--ink); width:7rem;
+  }
+  button{
+    font:inherit; padding:.45rem .9rem; border:1px solid var(--accent);
+    border-radius:5px; background:var(--accent); color:var(--accent-ink); cursor:pointer;
+  }
+  button.secondary{background:#fff; color:var(--accent)}
+  button:disabled{opacity:.5; cursor:not-allowed}
+  button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #b45309; outline-offset:2px}
+  table{border-collapse:collapse; width:100%; font-size:.88rem; margin:.5rem 0}
+  th,td{border:1px solid var(--line); padding:.3rem .5rem; text-align:left; vertical-align:top}
+  th{background:#e8ecf2}
+  code,kbd,.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.86em}
+  .log{
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:.6rem .8rem;
+    min-height:6rem; max-height:26rem; overflow:auto; white-space:pre-wrap;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.8rem; line-height:1.5;
+  }
+  .msg{padding:.5rem .8rem; border-radius:5px; margin:.5rem 0; font-size:.9rem}
+  .msg.warn{background:var(--warnbg); color:var(--warn); border:1px solid #d99a5b}
+  .msg.ok{background:var(--okbg); color:var(--ok); border:1px solid #6aa77f}
+  .msg[hidden]{display:none}
+  .inforce{font-weight:bold}
+  .tag{display:inline-block; background:#e8ecf2; border:1px solid var(--line); border-radius:3px; padding:0 .35rem; font-size:.8rem}
+  footer{margin-top:2rem; padding-top:.75rem; border-top:2px solid var(--line); font-size:.85rem; color:var(--muted)}
+  a{color:var(--accent)}
+  .vh{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+</style>
+</head>
+<body>
+
+<h1>When the Model Becomes the Target</h1>
+<p class="sub">
+  A two-period teaching game: a firm that knows it is being scored chooses between real effort and
+  window-dressing; a <em>committed</em> evaluator and a <em>revisable</em> evaluator price the same
+  report. Coarse by design. Client-side only — nothing is sent anywhere.
+  <br>Feiyu Li (fl140) · COMSCI/ECON 206, Duke Kunshan University · PS1 v2.
+</p>
+
+<!-- ============================ SETUP ============================ -->
+<h2 id="h-setup">1 · Draw and setup</h2>
+<div class="panel">
+  <div class="grid">
+    <div>
+      <fieldset>
+        <legend>Random draw</legend>
+        <label for="seed">Seed</label>
+        <input type="number" id="seed" value="2026" min="0" max="999999" step="1">
+        <button id="btnDraw" class="secondary">New draw</button>
+        <p class="sub" style="margin:.5rem 0 0">
+          The seed makes every run reproducible: same seed → same private type. Record it with your results.
+        </p>
+      </fieldset>
+    </div>
+    <div>
+      <fieldset>
+        <legend>Your private type (the evaluator cannot see this)</legend>
+        <p style="margin:.2rem 0">
+          True quality <span class="mono">θ</span> = <strong id="theta" class="mono">–</strong>
+          <span class="sub">(drawn from {1, 2, 3})</span>
+        </p>
+        <p style="margin:.2rem 0">
+          Manipulation-cost type <span class="mono">k</span> = <strong id="kappa" class="mono">–</strong>
+          <span class="sub">(drawn from {0.5, 1, 2}; cost of window-dressing is <span class="mono">k·m²</span>)</span>
+        </p>
+      </fieldset>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend>Which evaluator is in force?</legend>
+    <label><input type="radio" name="evalMode" value="static" checked> Committed evaluator <span class="sub">(announced = followed)</span></label>
+    <label><input type="radio" name="evalMode" value="memory"> Revisable evaluator <span class="sub">(follows a rule updated from your history)</span></label>
+    <p class="sub" style="margin:.4rem 0 0">
+      Both are always computed and displayed on the identical draw, so the evaluator is the only variable.
+      The one in force determines your recorded payoff.
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Evaluator parameters — the two knobs the research sweep varies</legend>
+    <div class="grid">
+      <div>
+        <p style="margin:.2rem 0"><strong>Outcome noise <span class="mono">σ</span></strong>
+          <span class="sub">— how noisy the realised outcome is: <span class="mono">ε ∈ {−σ, 0, +σ}</span></span></p>
+        <label><input type="radio" name="sigma" value="0"> 0 <span class="sub">(no noise)</span></label>
+        <label><input type="radio" name="sigma" value="0.5" checked> 0.5 <span class="sub">(default)</span></label>
+        <label><input type="radio" name="sigma" value="1"> 1.0</label>
+        <label><input type="radio" name="sigma" value="1.5"> 1.5</label>
+        <label><input type="radio" name="sigma" value="2"> 2.0</label>
+        <p class="sub" style="margin:.4rem 0 0">
+          The announced allowance is <span class="mono">m̄ = 1</span>. Once
+          <span class="mono">σ &gt; m̄</span> the revisable rule can price an honest firm
+          <em>worse</em> than the committed rule would.
+          <strong>To see it: seed 2, σ = 2, play <span class="mono">a = 1, m = 0</span> twice.</strong>
+          You inflate nothing and still get priced at 2.00 against a true value of 4.00,
+          where the committed rule would have said 3.00.
+          (Seed 2026 draws <span class="mono">ε = 0</span> first, so it never shows this —
+          which is exactly the blind spot the Week 2 version had.)
+        </p>
+      </div>
+      <div>
+        <p style="margin:.2rem 0"><strong>Memory strength <span class="mono">λ</span></strong>
+          <span class="sub">— how hard round 2 discounts last round's residual</span></p>
+        <label><input type="radio" name="lambda" value="0"> 0 <span class="sub">(no memory)</span></label>
+        <label><input type="radio" name="lambda" value="0.25"> 0.25</label>
+        <label><input type="radio" name="lambda" value="0.5"> 0.5</label>
+        <label><input type="radio" name="lambda" value="1" checked> 1.0 <span class="sub">(default)</span></label>
+        <label><input type="radio" name="lambda" value="1.5"> 1.5</label>
+        <label><input type="radio" name="lambda" value="2"> 2.0</label>
+        <p class="sub" style="margin:.4rem 0 0">
+          In the research sweep, deterrence stops improving past
+          <span class="mono">λ ≈ 0.5</span> while pricing accuracy keeps degrading — so this
+          default of 1.0 is optimal for neither. It is kept as the default only because it is
+          what the Week 2 version shipped with.
+        </p>
+      </div>
+    </div>
+    <p class="sub" style="margin:.5rem 0 0">
+      <strong>Defaults reproduce the Week 2 version exactly.</strong> At
+      <span class="mono">σ = 0.5, λ = 1</span> every price this page produces is bit-identical to
+      the original, which is what lets the research notebook assert replication against it.
+    </p>
+  </fieldset>
+</div>
+
+<!-- ============================ PLAY ============================ -->
+<h2 id="h-play">2 · Play a round</h2>
+<div class="panel">
+  <p style="margin-top:0">
+    Round: <strong id="roundNum" class="mono">1</strong> of 2
+    &nbsp;·&nbsp; <span class="tag" id="roundHint">No history yet — the revisable rule behaves like the committed one.</span>
+  </p>
+
+  <fieldset>
+    <legend>Productive effort <span class="mono">a</span> — raises true value, costs 0.5 each</legend>
+    <label><input type="radio" name="effort" value="0" checked> a = 0</label>
+    <label><input type="radio" name="effort" value="1"> a = 1</label>
+    <label><input type="radio" name="effort" value="2"> a = 2</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Window-dressing <span class="mono">m</span> — raises the report only, costs <span class="mono">k·m²</span></legend>
+    <label><input type="radio" name="wd" value="0" checked> m = 0</label>
+    <label><input type="radio" name="wd" value="1"> m = 1</label>
+    <label><input type="radio" name="wd" value="2"> m = 2</label>
+    <label><input type="radio" name="wd" value="custom"> custom:</label>
+    <input type="text" id="wdCustom" value="" inputmode="decimal"
+           aria-label="Custom window-dressing value (valid range 0 to 2)">
+    <p class="sub" style="margin:.4rem 0 0">
+      The custom field exists so the invalid-input case can be tested. Valid range is 0–2.
+    </p>
+  </fieldset>
+
+  <p>
+    <button id="btnSubmit">Submit report</button>
+    <button id="btnReset" class="secondary">Reset to round 0</button>
+  </p>
+
+  <div id="msg" class="msg" hidden role="status" aria-live="polite"></div>
+</div>
+
+<!-- ============================ RESULTS ============================ -->
+<h2 id="h-results">3 · Results log</h2>
+<div class="panel">
+  <p style="margin-top:0">
+    <button id="btnCopy" class="secondary">Copy log to clipboard</button>
+    <button id="btnClear" class="secondary">Clear log</button>
+    <span class="sub" id="copyNote"></span>
+  </p>
+  <div class="log" id="log" tabindex="0" role="log" aria-live="polite"
+       aria-label="Game output log">(no rounds played yet)</div>
+</div>
+
+<!-- ============================ RULES ============================ -->
+<h2 id="h-rules">4 · The complete rules (nothing is hidden)</h2>
+<div class="panel">
+  <table>
+    <caption class="vh">Complete rule table for the two-period game</caption>
+    <tr><th style="width:11rem">Element</th><th>Definition as implemented</th></tr>
+    <tr><td>Actors</td><td>Firm (you) and Evaluator. Investors allocate mechanically at the posted price and are not a strategic player.</td></tr>
+    <tr><td>Private type</td><td><span class="mono">θ ∈ {1, 2, 3}</span> uniform (true quality); <span class="mono">k ∈ {0.5, 1, 2}</span> uniform (manipulation-cost type). Both drawn once and fixed for both rounds.</td></tr>
+    <tr><td>Firm actions</td><td><span class="mono">a ∈ {0, 1, 2}</span> productive effort; <span class="mono">m ∈ [0, 2]</span> window-dressing.</td></tr>
+    <tr><td>Report</td><td><span class="mono">s = θ + a + m</span></td></tr>
+    <tr><td>True value</td><td><span class="mono">v = θ + a</span> — window-dressing does not create value.</td></tr>
+    <tr><td>Realised outcome</td><td><span class="mono">y = v + ε</span>, with <span class="mono">ε ∈ {−σ, 0, +σ}</span> uniform, <span class="mono">σ</span> set in section 1 (default 0.5). Revealed <em>after</em> the price is posted.</td></tr>
+    <tr><td>Committed evaluator</td><td><span class="mono">p = max(0, s − m̄)</span> with announced <span class="mono">m̄ = 1</span>. The announced rule <em>is</em> the followed rule: it never uses this firm's history.</td></tr>
+    <tr><td>Revisable evaluator</td><td>Round 1: identical to committed. Round 2: <span class="mono">p = max(0, s₂ − m̄ − λ·g₁)</span> where <span class="mono">g₁ = (s₁ − y₁) − m̄</span> is last round's residual inflation and <span class="mono">λ</span> is set in section 1 (default 1). <span class="mono">m̄</span> is still what was <em>announced</em> — the followed rule has moved away from it.</td></tr>
+    <tr><td>Firm payoff</td><td><span class="mono">π = p − 0.5·a − k·m²</span> (price minus effort cost minus convex manipulation cost).</td></tr>
+    <tr><td>Social welfare</td><td><span class="mono">W = v − k·m²</span> — real value created, net of resources burnt on manipulation.</td></tr>
+    <tr><td>Mispricing</td><td><span class="mono">|p − v|</span>, reported per round as the allocative distortion.</td></tr>
+    <tr><td>Horizon</td><td>Two rounds, then the game ends. Reset draws a fresh <span class="mono">θ, k</span> and empties the history.</td></tr>
+    <tr><td>Invalid input</td><td>A custom <span class="mono">m</span> that is non-numeric, negative, or above 2 is <strong>rejected</strong>: an error message is shown, the round does not advance, and no state changes.</td></tr>
+  </table>
+</div>
+
+<!-- ============================ LIMITS ============================ -->
+<h2 id="h-limits">5 · What this artifact does <em>not</em> show</h2>
+<div class="panel">
+  <ul>
+    <li>It is a <strong>teaching artifact, not the research model</strong>. It plays one fixed parameterisation on a coarse grid; it does not solve for equilibrium. Equilibrium claims belong to the OpenSpiel/CFR version, not to anything you can see here.</li>
+    <li><strong>No output here is evidence for H1–H3.</strong> Those hypotheses remain anticipated, not obtained.</li>
+    <li>The convex cost <span class="mono">k·m²</span> is a <strong>modelling assumption</strong>, not an elicited behavioural fact. No human subject has been run.</li>
+    <li>Discretising <span class="mono">θ</span> and <span class="mono">m</span> has not been shown to preserve the equilibrium of a continuous game.</li>
+    <li>The revisable evaluator infers inflation from a <strong>noisy</strong> signal (<span class="mono">ε</span>), so it can penalise an honest firm that drew badly. You can now trigger this deliberately with the <span class="mono">σ</span> control; the research notebook measures how often it happens. Seeing it once here is a demonstration, not the measurement.</li>
+    <li><strong>The noise here is coarser than in the research model, and the rates differ.</strong> This page draws <span class="mono">ε</span> from three points <span class="mono">{−σ, 0, +σ}</span>, so for <span class="mono">σ &gt; m̄</span> an honest firm is mis-priced relative to commitment in <span class="mono">2/3</span> of draws. The notebook draws <span class="mono">ε ~ Uniform(−σ, σ)</span> and reports <span class="mono">(σ − m̄)/σ</span>, which is <span class="mono">1/2</span> at <span class="mono">σ = 2</span>. Same mechanism and same threshold <span class="mono">σ* = m̄</span>; different frequency. Quote the notebook's number, not this page's.</li>
+    <li>The revisable evaluator has not been tested against a firm deliberately building a misleading history over a longer horizon.</li>
+    <li>All quantities are simulated. Nothing here is a valuation of, or evidence about, any real firm.</li>
+  </ul>
+</div>
+
+<!-- ============================ BOUNDARY ============================ -->
+<h2 id="h-boundary">6 · Responsible boundary</h2>
+<div class="panel">
+  <p style="margin-top:0">
+    This is a Hugging Face <strong>Static Space</strong>: a single <code>index.html</code> with inline CSS and
+    JavaScript. There is <strong>no</strong> Hugging Face CPU/GPU application runtime, no backend, no database,
+    no API call, no secret, no paid service, and no external resource of any kind — no fonts, no scripts,
+    no analytics, no cookies. No personal data is collected, stored, or transmitted.
+  </p>
+  <p>
+    <strong>The narrower claim only.</strong> Avoiding a dedicated application runtime is not the same as zero
+    environmental impact: hosting, network transfer, and your own browser's CPU still consume resources while
+    this page is open and while the simulation loop runs. Only the narrower, verifiable claim is made.
+  </p>
+</div>
+
+<footer>
+  <p>
+    Source: this page is the entire program — use your browser's <em>View Source</em> to read every rule
+    exactly as implemented. Licence: CC BY 4.0. Built for COMSCI/ECON 206, Week 2.
+  </p>
+</footer>
+
+<script>
+"use strict";
+(function () {
+  // ---------- seeded PRNG (mulberry32) so every run is reproducible ----------
+  function mulberry32(seed) {
+    let t = seed >>> 0;
+    return function () {
+      t = (t + 0x6D2B79F5) >>> 0;
+      let x = Math.imul(t ^ (t >>> 15), 1 | t);
+      x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
+      return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  const M_BAR  = 1;    // the committed evaluator's fixed, ANNOUNCED inflation allowance
+  const EFFORT_COST = 0.5;
+
+  // sigma (outcome noise) and lambda (memory strength) are read from the controls.
+  // Defaults sigma = 0.5, lambda = 1 reproduce the Week 2 version bit-for-bit.
+  const readSigma  = () => parseFloat(document.querySelector('input[name="sigma"]:checked').value);
+  const readLambda = () => parseFloat(document.querySelector('input[name="lambda"]:checked').value);
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    seed: $("seed"), theta: $("theta"), kappa: $("kappa"),
+    roundNum: $("roundNum"), roundHint: $("roundHint"),
+    wdCustom: $("wdCustom"), msg: $("msg"), log: $("log"), copyNote: $("copyNote"),
+    btnDraw: $("btnDraw"), btnSubmit: $("btnSubmit"), btnReset: $("btnReset"),
+    btnCopy: $("btnCopy"), btnClear: $("btnClear")
+  };
+
+  let rng, state, logLines = [];
+
+  const fmt = (x) => (Math.round(x * 1000) / 1000).toFixed(2);
+
+  function newDraw(seedVal) {
+    rng = mulberry32(seedVal);
+    const thetas = [1, 2, 3], kappas = [0.5, 1, 2];
+    state = {
+      seed: seedVal,
+      theta: thetas[Math.floor(rng() * 3)],
+      k:     kappas[Math.floor(rng() * 3)],
+      round: 1,
+      history: []            // {s, y, gap} for each completed round
+    };
+    render();
+  }
+
+  function render() {
+    els.theta.textContent = state.theta;
+    els.kappa.textContent = state.k;
+    els.roundNum.textContent = Math.min(state.round, 2);
+    if (state.round > 2) {
+      els.roundHint.textContent = "Game over — press Reset to draw a fresh type.";
+      els.btnSubmit.disabled = true;
+    } else if (state.history.length === 0) {
+      els.roundHint.textContent = "No history yet — the revisable rule behaves like the committed one.";
+      els.btnSubmit.disabled = false;
+    } else {
+      const g = state.history[0].gap;
+      els.roundHint.textContent =
+        "Revisable rule carries g₁ = " + fmt(g) + " from round 1 and will subtract λ·g₁ = " + fmt(readLambda() * g) + ".";
+      els.btnSubmit.disabled = false;
+    }
+  }
+
+  function say(text, kind) {
+    els.msg.textContent = text;
+    els.msg.className = "msg " + kind;
+    els.msg.hidden = false;
+  }
+  function clearMsg() { els.msg.hidden = true; }
+
+  function readEvalMode() {
+    return document.querySelector('input[name="evalMode"]:checked').value;
+  }
+
+  // Returns {ok:true, value} or {ok:false, reason}
+  function readWindowDressing() {
+    const choice = document.querySelector('input[name="wd"]:checked').value;
+    if (choice !== "custom") return { ok: true, value: parseFloat(choice) };
+    const raw = els.wdCustom.value.trim();
+    if (raw === "")          return { ok: false, reason: 'the custom field is empty' };
+    const v = Number(raw);
+    if (!Number.isFinite(v)) return { ok: false, reason: '"' + raw + '" is not a number' };
+    if (v < 0)               return { ok: false, reason: v + " is below the valid range 0–2" };
+    if (v > 2)               return { ok: false, reason: v + " is above the valid range 0–2" };
+    return { ok: true, value: v };
+  }
+
+  function push(line) {
+    logLines.push(line);
+    els.log.textContent = logLines.join("\n");
+    els.log.scrollTop = els.log.scrollHeight;
+  }
+
+  function submit() {
+    clearMsg();
+    if (state.round > 2) { say("The game is over. Press Reset to start a new draw.", "warn"); return; }
+
+    const wd = readWindowDressing();
+    if (!wd.ok) {
+      // ---- invalid input: reject, do not advance, change nothing ----
+      const line =
+        "[seed " + state.seed + "] ROUND " + state.round + " — INPUT REJECTED\n" +
+        "  reason        : " + wd.reason + "\n" +
+        "  action taken  : report not submitted; round counter unchanged (still " + state.round + "); " +
+        "no state modified\n" +
+        "  handling      : rejection (not a clamp, not a silent default, no error thrown)";
+      push(line);
+      say("Rejected: " + wd.reason + ". The round did not advance and no state changed.", "warn");
+      return;
+    }
+
+    const a = parseFloat(document.querySelector('input[name="effort"]:checked').value);
+    const m = wd.value;
+    const mode = readEvalMode();
+
+    const v = state.theta + a;                       // true value
+    const s = state.theta + a + m;                   // report
+    const sigma = readSigma();
+    const lam   = readLambda();
+    // eps support scales with sigma; at sigma = 0.5 this is the original {-0.5, 0, +0.5},
+    // and the rng is consumed exactly once either way, so seeded runs stay comparable.
+    const eps = [-sigma, 0, sigma][Math.floor(rng() * 3)];
+    const y = v + eps;                               // realised outcome, revealed after pricing
+
+    const pStatic = Math.max(0, s - M_BAR);
+    let pMemory, memNote;
+    if (state.history.length === 0) {
+      pMemory = pStatic;
+      memNote = "no history → identical to committed";
+    } else {
+      const g1 = state.history[0].gap;
+      pMemory = Math.max(0, s - M_BAR - lam * g1);
+      memNote = "s₂ − m̄ − λ·g₁ = " + fmt(s) + " − " +
+                fmt(M_BAR) + " − " + fmt(lam * g1);
+    }
+
+    const p = (mode === "memory") ? pMemory : pStatic;
+    const manipCost = state.k * m * m;
+    const payoff = p - EFFORT_COST * a - manipCost;
+    const welfare = v - manipCost;
+    const mispricing = Math.abs(p - v);
+
+    const gap = (s - y) - M_BAR;                     // residual inflation the evaluator can infer
+    state.history.push({ s: s, y: y, gap: gap });
+
+    // --- Aaron Wang's PS1 review question, made visible ---------------------
+    // An honest firm (m = 0) reports s = v exactly. If the revisable rule still
+    // prices it below v, memory has punished honesty -- and the comparison that
+    // matters is whether it did so by MORE than the committed rule would have.
+    let flag = "";
+    if (m === 0) {
+      const errMemory = Math.abs(pMemory - v);
+      const errStatic = Math.abs(pStatic - v);
+      if (errMemory > errStatic + 1e-9) {
+        flag = "\n  ⚠ HONEST FIRM MIS-PUNISHED: you inflated nothing (m = 0), yet the revisable\n" +
+               "    rule is off by " + fmt(errMemory) + " while the committed rule is off by " +
+               fmt(errStatic) + ".\n" +
+               "    Cause: ε = " + fmt(eps) + " and |ε| > m̄ = " + fmt(M_BAR) + ", so the residual g₁ " +
+               "misreads bad luck as inflation.\n" +
+               "    This is the σ > m̄ threshold from the paper, happening to you.";
+      } else if (pMemory < v - 1e-9) {
+        flag = "\n  · note: the revisable rule under-priced you (honest, m = 0) by " +
+               fmt(v - pMemory) + ", but by less than\n" +
+               "    the committed rule's error of " + fmt(errStatic) +
+               ". Below σ = m̄ = " + fmt(M_BAR) + " memory still helps on net.";
+      }
+    }
+
+    push(
+      "[seed " + state.seed + " | σ = " + fmt(sigma) + " | λ = " + fmt(lam) + "] ROUND " +
+          state.round + " — evaluator in force: " + (mode === "static" ? "COMMITTED" : "REVISABLE") + "\n" +
+      "  private type  : θ = " + state.theta + ", k = " + state.k + "\n" +
+      "  actions       : a = " + fmt(a) + ", m = " + fmt(m) + "\n" +
+      "  report        : s = θ + a + m = " + fmt(s) + "\n" +
+      "  true value    : v = θ + a = " + fmt(v) + "\n" +
+      "  price COMMITTED: " + fmt(pStatic) + "   (max(0, s − m̄), m̄ = " + fmt(M_BAR) + ")\n" +
+      "  price REVISABLE: " + fmt(pMemory) + "   (" + memNote + ")\n" +
+      "  realised y    : " + fmt(y) + "   (v + ε, ε = " + fmt(eps) + ", revealed after pricing)\n" +
+      "  firm payoff   : π = p − 0.5a − k·m² = " + fmt(p) + " − " +
+          fmt(EFFORT_COST * a) + " − " + fmt(manipCost) + " = " + fmt(payoff) + "\n" +
+      "  welfare       : W = v − k·m² = " + fmt(welfare) + "\n" +
+      "  mispricing    : |p − v| = " + fmt(mispricing) + "\n" +
+      "  carried fwd   : g = (s − y) − m̄ = " + fmt(gap) +
+      flag
+    );
+
+    say("Round " + state.round + " recorded. Committed priced it at " + fmt(pStatic) +
+        ", revisable at " + fmt(pMemory) + ".", flag.indexOf("⚠") >= 0 ? "warn" : "ok");
+
+    state.round += 1;
+    render();
+  }
+
+  function reset() {
+    clearMsg();
+    const seedVal = Math.max(0, Math.floor(Number(els.seed.value) || 0));
+    newDraw(seedVal);
+    push("--- RESET to round 0: fresh draw on seed " + seedVal +
+         " (θ = " + state.theta + ", k = " + state.k + "), history emptied ---");
+    say("Reset complete: new private type drawn, history emptied.", "ok");
+  }
+
+  // ---------------- wiring ----------------
+  els.btnSubmit.addEventListener("click", submit);
+  els.btnReset .addEventListener("click", reset);
+  els.btnDraw  .addEventListener("click", reset);
+
+  els.wdCustom.addEventListener("input", function () {
+    if (this.value.trim() !== "") {
+      document.querySelector('input[name="wd"][value="custom"]').checked = true;
+    }
+  });
+
+  els.btnCopy.addEventListener("click", function () {
+    const text = logLines.join("\n");
+    const done = () => { els.copyNote.textContent = "  copied ✓"; setTimeout(() => els.copyNote.textContent = "", 2500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => {
+        els.copyNote.textContent = "  copy blocked — select the log text manually";
+      });
+    } else {
+      els.copyNote.textContent = "  clipboard unavailable — select the log text manually";
+    }
+  });
+
+  els.btnClear.addEventListener("click", function () {
+    logLines = [];
+    els.log.textContent = "(no rounds played yet)";
+    els.copyNote.textContent = "";
+  });
+
+  newDraw(2026);
+})();
+</script>
+</body>
+</html>
